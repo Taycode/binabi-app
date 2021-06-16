@@ -1,0 +1,43 @@
+
+
+footer a {
+  color: #fff;
+}
+
+.logo-others img {
+  width: 30%;
+}
+
+.footer-section {
+  margin-top: 100px;
+  padding: 20px 0px;
+  display: flex;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/* Logo and others styling */
+
+.logo-others {
+  text-align: left;
+}
+
+.logo-others .nav-btm-items {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  margin-left: -55px;
+}
+
+/* Social media handle and others styling */
+.social-others {
+  text-align: right;
+}
+
+.icon {
+  margin-left: 10px;
+}

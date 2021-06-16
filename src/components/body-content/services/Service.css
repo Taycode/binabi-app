@@ -1,0 +1,27 @@
+.service-section {
+  padding: 50px;
+  margin: 50px auto;
+  text-align: center;
+  transition: 10s ease-out;
+  width: 75%;
+}
+
+.services {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid #000;
+  margin: 50px;
+  padding: 20px;
+}
+
+.services img {
+  width: 30%;
+  flex: 2;
+}
+
+.refill-content {
+  text-align: right;
+  margin-right: 50px;
+  flex: 2;
+}

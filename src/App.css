@@ -1,0 +1,44 @@
+.App {
+    position: relative;
+    min-height: 100vh;
+    font-family: "Lato", sans-serif;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #000;
+    text-shadow: 1px 1px rgb(38, 133, 170);
+}
+
+footer {
+    color: #fff;
+    background: rgb(38, 133, 170);
+    font-family: "Alata", sans-serif;
+    width: 100%;
+  }
+
+  .btn {
+    width: 82%;
+    padding: 8px 12px;
+    color: #fff;
+    background: rgb(38, 133, 170);
+    border: none;
+    margin: 10px auto;
+    font-weight: 900;
+  }
+
+  label, input {
+    display: block;
+    color: #000;
+    font-family: "Alata", sans-serif;
+}
+
+input {
+    outline: none;
+    width: 80%;
+    margin: 10px auto;
+}
