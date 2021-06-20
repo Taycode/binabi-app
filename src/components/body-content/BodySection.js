@@ -1,7 +1,7 @@
 import React from "react";
 import "./BodySection.css";
-import serviceImg from "./../images/2.jpeg";
-import heroImage from "./../images/1.jpg";
+import serviceImg from "../../assets/images/2.jpeg";
+import heroImage from "../../assets/images/1.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPercentage,

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Service.css";
-import refill from "./../../images/Refill.jpg"
-import fill from "./../../images/fill.jpg"
+import refill from "../../../assets/images/Refill.jpg"
+import fill from "../../../assets/images/fill.jpg"
 
 function ServiceSection() {
   return (

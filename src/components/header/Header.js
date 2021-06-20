@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import "./Header.css";
-import logo from "./../images/logoImage.png";
-import openIcon from "./../images/icon-close.svg";
-import closeIcon from "./../images/icon-hamburger.svg";
+import logo from "../../assets/images/logo.png";
+import openIcon from "../../assets/images/icon-close.svg";
+import closeIcon from "../../assets/images/icon-hamburger.svg";
 import { Link } from "react-router-dom";
 
 function Header() {
   const [open, setOpen] = useState(false);
 
-  const handleClick = () => {
-    const navBar = document.querySelector(".nav-items");
+  const handleClick = (e) => {
+    const navBar = e.target;
 
     if (!open) {
       navBar.classList.add("active");
@@ -21,7 +21,7 @@ function Header() {
   };
 
   return (
-    <header>
+    <header className="header">
       <nav>
         <div className="logo-section">
           <img src={logo} alt="logo" className="logo" />

@@ -1,6 +1,6 @@
 import React from "react";
 import "./PlaceOrder.css";
-import placeOrder from "./../../images/order.png";
+import placeOrder from "../../../assets/images/order.png";
 
 function PlaceOrder() {
   return (

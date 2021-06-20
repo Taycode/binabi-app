@@ -1,4 +1,7 @@
 /* Navigation styling */
+:root{
+  --theme: #2685aa;
+}
 
 .logo {
   width: 30%;
@@ -7,18 +10,24 @@
 .open {
   display: none;
 }
+.header {
+  height: 60px;
+  background-color: white;
+  border-bottom: 2px solid gray;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
 
 nav {
-  color: #fff;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  font-family: "Alata", sans-serif;
   font-size: 15px;
   top: 0;
   width: 100%;
   z-index: 1;
-  background: rgb(38, 133, 170);
 }
 
 .nav-items {
