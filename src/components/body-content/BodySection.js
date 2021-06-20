@@ -3,10 +3,12 @@ import "./BodySection.css";
 import serviceImg from "./../images/2.jpeg";
 import heroImage from "./../images/1.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPercentage } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faWrench } from "@fortawesome/free-solid-svg-icons";
-import { faChartLine } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPercentage,
+  faUser,
+  faWrench,
+  faChartLine,
+} from "@fortawesome/free-solid-svg-icons";
 
 function BodySection() {
   return (

@@ -1,8 +1,26 @@
 .placeorder-section {
-    padding: 20px;
-    margin: 30px auto;
-    width: 25%;
-    text-align: center;
-    height: 40vh;
-   
+  padding: 5px;
+  text-align: center;
+}
+
+.order-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 50px;
+}
+
+.img-sec {
+  flex: 3;
+}
+
+.order-info {
+  border: 1px solid rgb(38, 133, 170);
+  flex: 3;
+  padding: 10px;
+}
+
+.order-info label {
+  color: rgb(38, 133, 170);
 }

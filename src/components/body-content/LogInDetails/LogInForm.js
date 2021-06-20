@@ -32,14 +32,9 @@ function LogInForm() {
           />
         </div>
 
-        {admin.userName === "admin@binabi@gmail.com" &&
-        admin.password === "admin@binabi" ? (
-          <Link to="/dashboard">
-            <button className="btn" onClick={handleClick}>
-              Log In
-            </button>
-          </Link>
-        ) : null}
+        <button className="btn" onClick={handleClick}>
+          Log In
+        </button>
       </form>
     </div>
   );

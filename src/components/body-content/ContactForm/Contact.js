@@ -44,15 +44,9 @@ function Contact() {
           <input type="text" />
         </div>
 
-        <div className="anither">
-          {/* <label>
-            {yourName} {phoneNumber}
-          </label> */}
-        </div>
+        <div className="anither"></div>
 
-        {/* <Link to="/placeorder"> */}
-        <button className="btn">Place an Order</button>
-        {/* </Link> */}
+        <button className="btn">Contact</button>
       </form>
     </div>
   );

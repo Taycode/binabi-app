@@ -7,6 +7,7 @@ import Contact from "./components/body-content/ContactForm/Contact";
 import LogInForm from "./components/body-content/LogInDetails/LogInForm";
 import ServiceSection from "./components/body-content/services/ServiceSection";
 import Dashboard from "./components/body-content/dashboard/Dashboard";
+import PlaceOrder from "./components/body-content/placeorder/PlaceOrder";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/service" exact component={ServiceSection} />
           <Route path="/contact" exact component={Contact} />
           <Route path="/login" exact component={LogInForm} />
+          <Route path="/placeorder" exact component={PlaceOrder} />
           <Route path="/" exact component={BodySection} />
         </Switch>
 

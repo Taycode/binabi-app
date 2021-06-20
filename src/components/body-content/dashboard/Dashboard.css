@@ -14,3 +14,17 @@ td {
   width: 50%;
   padding: 10px;
 }
+
+@media (max-width: 450px) {
+  .dashboard {
+    width: 100%;
+    margin: 20px 10px;
+  }
+
+  table,
+  th,
+  td {
+    width: 50%;
+    font-size: 14px;
+  }
+}

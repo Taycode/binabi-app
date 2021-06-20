@@ -1,6 +1,6 @@
 .service-section {
   padding: 50px;
-  margin: 50px auto;
+  margin: 0px auto;
   text-align: center;
   transition: 10s ease-out;
   width: 75%;
@@ -11,7 +11,7 @@
   justify-content: space-evenly;
   align-items: center;
   border: 1px solid #000;
-  margin: 50px;
+  margin: 20px auto;
   padding: 20px;
 }
 
@@ -24,4 +24,24 @@
   text-align: right;
   margin-right: 50px;
   flex: 2;
+}
+
+@media (max-width: 450px) {
+  .service-section {
+    width: 80%;
+    margin: auto;
+  }
+
+  .services {
+    flex-direction: column;
+  }
+
+  .services img {
+    width: 100%;
+  }
+
+  .refill-content {
+    text-align: center;
+    margin-right: 0px;
+  }
 }
