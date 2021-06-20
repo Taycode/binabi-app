@@ -8,6 +8,8 @@ export default class Order {
                 address: data.address,
                 phoneNumber: data.phoneNumber,
                 capacity: data.capacity,
+                status: 'pending',
+                timeCreated: Date.now(),
             });
             console.log(order)
             return order
