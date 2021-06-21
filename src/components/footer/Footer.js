@@ -20,7 +20,7 @@ function Footer() {
                 <Link to="/service">Service</Link>
                 </li>
             <li className="nav-item">
-            <Link to="/contact">Contact Us</Link>
+            <Link to="/contact-us">Contact Us</Link>
             </li>
             <li className="nav-item">
             <Link to="/login">Log In</Link>
