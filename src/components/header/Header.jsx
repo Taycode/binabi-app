@@ -3,7 +3,7 @@ import "./Header.css";
 import logo from "../../assets/images/logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -21,9 +21,9 @@ function Header() {
   return (
     <header className="header">
       <nav>
-        <div className="logo-section">
+        <Link to="/" className="logo-section">
           <img src={logo} alt="logo" className="logo" />
-        </div>
+        </Link>
 
         <ul className={`nav-items ${open && 'menu-focused'}`}>
           <div className="nav-header">
