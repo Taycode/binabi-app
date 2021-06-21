@@ -8,6 +8,17 @@ a {
   text-decoration: none;
 }
 
+.content-holder {
+  padding-top: 62px;
+  padding-bottom: 80px;
+}
+
+@media screen and (max-width: 600px) {
+  .content-holder {
+    padding-bottom: 142px;
+  }
+}
+
 footer {
   color: #fff;
   background: rgb(38, 133, 170);

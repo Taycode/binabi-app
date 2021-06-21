@@ -4,19 +4,16 @@
   --text-gray: grey
 }
 
-.logo-section {
+.header .logo-section {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.logo {
+
+.header .logo {
   height: 40px;
 }
 
-
-.open {
-  display: none;
-}
 .header {
   height: 62px;
   background-color: white;
@@ -31,7 +28,7 @@
   top: 0;
 }
 
-nav {
+.header nav {
   width: 100%;
   max-width: 1300px;
   margin: auto;
@@ -42,18 +39,18 @@ nav {
   z-index: 1;
 }
 
-.nav-items {
+.header .nav-items {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 30px;
 }
 
-.nav-items .nav-header {
+.header .nav-items .nav-header {
   display: none;
 }
 
-.nav-item {
+.header .nav-item {
   padding: 0 5px;
   list-style: none;
   transition: 300ms ease-in;
@@ -62,14 +59,14 @@ nav {
 }
 
 
-.nav-item:hover, .nav-item-link.page-active .nav-item {
+.header .nav-item:hover, .nav-item-link.page-active .nav-item {
   transition: 300ms ease-out;
   font-weight: 600;
   border-color: var(--theme);
   color: var(--theme);
 }
 
-.menu-toggle {
+.header .menu-toggle {
   font-size: 1.5em;
   font-weight: 300;
   display: none;
@@ -77,11 +74,11 @@ nav {
 
 /* Media Queries */
 @media (max-width: 600px) {
-  .menu-toggle {
+  .header .menu-toggle {
     display: block;
   }
   
-  .nav-items {
+  .header .nav-items {
     padding: 0;
     display: block;
     position: fixed;
@@ -97,37 +94,42 @@ nav {
     box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.2);
   }
   
-  .nav-items.menu-focused {
+  .header .nav-items.menu-focused {
     transform: translateX(0%);
   }
 
-  .nav-items .nav-header {
+  .header .nav-items .nav-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 30px;
     border-bottom: 2px solid rgba(255, 255, 255, 0.172);
+    margin-bottom: 10px;
   }
 
-  .nav-header .menu-close {
+  .header .nav-header .menu-close {
     cursor: pointer;
     font-size: 2em;
     color: white;
   }
 
-  .nav-item {
-    padding: 12px 35px;
+  .header .nav-item {
+    padding: 15px 35px;
     list-style: none;
+    display: block;
+    width: 90%;
+    margin: auto;
+    border-radius: 4px;
     transition: 300ms ease-in;
     border: none;
     color: rgba(255, 255, 255, 0.801);
   }
   
-  .nav-item:hover, .nav-item-link.page-active .nav-item {
+  .header .nav-item:hover, .nav-item-link.page-active .nav-item {
     transition: 300ms ease-out;
     font-weight: 600;
     border: none;
     color: white;
-    background-color: rgba(255, 255, 255, 0.097);
+    background-color: rgba(185, 215, 255, 0.097);
   }
 }

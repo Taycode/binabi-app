@@ -1,0 +1,83 @@
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: 120% 120%;
+  min-height: 70vh;
+  padding: 20px;
+  position: relative;
+  animation: change 15s ease-in-out 0s infinite forwards alternate, scale 15s ease-in-out 0s infinite forwards alternate;
+}
+
+@media screen and (max-width: 600px) {
+  .hero {
+    min-height: 60vh;
+  }
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.823);
+  z-index: 0;
+}
+
+.hero >* {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes scale {
+  from {
+    background-size: 120% 120%;
+  } to {
+    background-size: 220% 220%;
+  }
+}
+
+@keyframes change {
+  0% {
+    background-image: url('../../../assets/images/background_two.jpg');
+  } 45% {
+    background-image: url('../../../assets/images/background_three.jpg');
+  } 100% {
+    background-image: url('../../../assets/images/background_one.jpg');
+  }
+}
+
+.hero .hero-copy {
+  color: white;
+  font-size: 5em;
+  max-width: 800px;
+  text-align: center;
+  transition: font-size 300ms ease-in-out;
+}
+
+@media screen and (max-width: 600px) {
+  .hero .hero-copy {
+    font-size: 3em;
+  }
+}
+
+.hero .call-to-action {
+  padding: 13px 30px;
+  border: none;
+  background-color: var(--theme);
+  color: white;
+  font-weight: medium;
+  font-size: 1.1em;
+  font-family: inherit;
+  border-radius: 4px;
+  display: block;
+  margin: auto;
+  margin-top: 50px;
+  cursor: pointer;
+  text-transform: uppercase;
+}

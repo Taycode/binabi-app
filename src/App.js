@@ -14,7 +14,7 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-        <div style={{paddingTop: '50px'}}>
+        <div class="content-holder">
           <Switch>
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/services" exact component={ServiceSection} />

@@ -1,16 +1,13 @@
 import React from "react";
 import "./Footer.css";
 import {Link} from "react-router-dom"
-import logoImg from "../../assets/images/logoImage.png"
+import logoImg from "../../assets/images/logo.png"
 import facebook from "../../assets/images/icon-facebook.svg"
 import twitter from "../../assets/images/icon-twitter.svg"
 import instagram from "../../assets/images/icon-instagram.svg"
 
-
-
 function Footer() {
   return (
-  
     <footer>
       <div className="footer-section">
         <div className="logo-others">
