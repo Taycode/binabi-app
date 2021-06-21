@@ -14,17 +14,17 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-
-        <Switch>
-          <Route path="/dashboard" exact component={Dashboard} />
-          <Route path="/service" exact component={ServiceSection} />
-          <Route path="/contact" exact component={Contact} />
-          <Route path="/login" exact component={LogInForm} />
-          <Route path="/placeorder" exact component={PlaceOrder} />
-          <Route path="/" exact component={BodySection} />
-        </Switch>
-
-        <Footer />
+        <div style={{paddingTop: '50px'}}>
+          <Switch>
+            <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/service" exact component={ServiceSection} />
+            <Route path="/contact" exact component={Contact} />
+            <Route path="/login" exact component={LogInForm} />
+            <Route path="/placeorder" exact component={PlaceOrder} />
+            <Route path="/" exact component={BodySection} />
+          </Switch>
+          <Footer />
+        </div>
       </div>
     </Router>
   );
