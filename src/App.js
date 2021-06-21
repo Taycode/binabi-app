@@ -17,10 +17,10 @@ function App() {
         <div style={{paddingTop: '50px'}}>
           <Switch>
             <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/service" exact component={ServiceSection} />
-            <Route path="/contact" exact component={Contact} />
+            <Route path="/services" exact component={ServiceSection} />
+            <Route path="/contact-us" exact component={Contact} />
             <Route path="/login" exact component={LogInForm} />
-            <Route path="/placeorder" exact component={PlaceOrder} />
+            <Route path="/order" exact component={PlaceOrder} />
             <Route path="/" exact component={BodySection} />
           </Switch>
           <Footer />
