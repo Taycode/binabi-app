@@ -8,11 +8,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: #000;
-  text-shadow: 1px 1px rgb(38, 133, 170);
-}
-
 footer {
   color: #fff;
   background: rgb(38, 133, 170);

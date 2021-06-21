@@ -3,7 +3,7 @@ import "./Header.css";
 import logo from "../../assets/images/logo.png";
 import openIcon from "../../assets/images/icon-close.svg";
 import closeIcon from "../../assets/images/icon-hamburger.svg";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -20,6 +20,12 @@ function Header() {
     console.log(navBar);
   };
 
+  const routes = [
+    {id: 1, name: 'Home', path: '/'},
+    {id: 2, name: 'Services', path: '/services'},
+    {id: 3, name: 'Contact us', path: '/contact-us'},
+    {id: 4, name: 'Place an order', path: '/order'},
+  ]
   return (
     <header className="header">
       <nav>
@@ -34,18 +40,15 @@ function Header() {
         </div>
 
         <ul className="nav-items">
-          <li className="nav-item">
-            <Link to="/"> Home </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/service">Service</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/contact">Contact Us</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/placeorder">Place an Order</Link>
-          </li>
+          {
+            routes.map(el => (
+              <NavLink to={el.path} exact className="nav-item" activeClassName="page-active">
+                <li  key={el.id}>
+                  {el.name}
+                </li>
+              </NavLink>
+            ))
+          }
         </ul>
       </nav>
     </header>
