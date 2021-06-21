@@ -34,7 +34,7 @@ function Header() {
           </div>
           {
             routes.map(el => (
-              <NavLink key={el.id} to={el.path} exact className="nav-item-link" activeClassName="page-active">
+              <NavLink key={el.id} to={el.path} exact className="nav-item-link" activeClassName="page-active" onClick={handleClick} >
                 <li className="nav-item">
                   {el.name}
                 </li>
