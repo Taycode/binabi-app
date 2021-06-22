@@ -6,15 +6,15 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import LogInForm from "./components/body-content/LogInDetails/LogInForm";
 import ServiceSection from "./components/body-content/services/ServiceSection";
 import Dashboard from "./components/body-content/dashboard/Dashboard";
-import PlaceOrder from "./components/body-content/placeorder/PlaceOrder";
 import { ContactUs } from "./components/contact-us/Contact";
+import { PlaceAnOrder } from "./components/order/order";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Header />
-        <div class="content-holder">
+        <div className="content-holder">
           <Switch>
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/Binabi" exact>
@@ -23,7 +23,7 @@ function App() {
             <Route path="/services" exact component={ServiceSection} />
             <Route path="/contact-us" exact component={ ContactUs } />
             <Route path="/login" exact component={LogInForm} />
-            <Route path="/order" exact component={PlaceOrder} />
+            <Route path="/order" exact component={PlaceAnOrder} />
             <Route path="/" exact component={BodySection} />
           </Switch>
           <Footer />
