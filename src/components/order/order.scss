@@ -1,3 +1,5 @@
+$breakpoint: (max-width: 800px);
+
 .body {
   min-height: 90vh;
   width: 100%;
@@ -5,6 +7,10 @@
   align-items: center;
   justify-content: center;
   background: #fafafa;
+  @media screen and #{$breakpoint} {
+    display: block;
+    min-height: max-content;
+  }
   .container {
     width: 95%;
     max-width: 1000px;
@@ -14,6 +20,11 @@
     border-radius: 0px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    margin: auto;
+    @media screen and #{$breakpoint} {
+      grid-template-columns: repeat(1, 1fr);
+      margin: 40px auto;
+    }
     .image-container {
       background: linear-gradient(#020e3de7, #0a173cd0), url('../../assets/images/order-gas.jpg');
       background-position: center;
@@ -22,6 +33,9 @@
       border-top-left-radius: inherit;
       border-bottom-left-radius: inherit;
       padding: 40px;
+      @media screen and #{$breakpoint} {
+        display: none;
+      }
       .title {
         color: white;
         font-size: 2.5em;
@@ -39,6 +53,9 @@
       border-top-right-radius: inherit;
       border-bottom-right-radius: inherit;
       padding: 50px 40px;
+      @media screen and #{$breakpoint} {
+        padding: 50px 30px;
+      }
       .form-header {
         margin-bottom: 20px;
         .title-caption {
@@ -134,7 +151,16 @@
         font-weight: 600;
         margin-top: 20px;
         padding: 10px 20px;
+        border-radius: 6px;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
         color: rgb(233, 13, 79);
+      }
+
+      .success-box {
+        @extend .error-box;
+        background: rgb(225, 255, 238);
+        line-height: 1.7em;
+        color: rgb(9, 189, 54);
       }
     }
   }

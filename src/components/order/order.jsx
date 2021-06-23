@@ -29,6 +29,7 @@ const RightOrderColumn = () => {
   const [ formData, setFormData ] = useState({})
   const [ submitting, setSubmitting ] = useState(false)
   const [ submitError, setSubmitError ] = useState(null)
+  const [ success, setSuccess ] = useState(false)
 
   function handleInput (data) {
     setFormData({...formData, ...data})
@@ -40,7 +41,10 @@ const RightOrderColumn = () => {
 
     setSubmitting(true)
     setSubmitError(false)
-    orderInstance.createOrder(formData).catch((e) => {
+    setSuccess(false)
+    orderInstance.createOrder(formData).then(() => {
+      setSuccess(true)
+    }).catch((e) => {
       console.log(e)
       setSubmitError(true)
     }).finally(() => {
@@ -58,7 +62,7 @@ const RightOrderColumn = () => {
           to place your order
         </p>
       </div>
-
+      
       <FormField
         label="Fullname"
         name="name" //The name becomes the object key - Very important
@@ -103,6 +107,14 @@ const RightOrderColumn = () => {
       { submitError && (<div className="error-box">
         Error occurred while placing your order. Please try again. 
       </div>)}
+
+      {
+        success && (
+          <div className="success-box">
+            Thank you! Your order has been received successfully.
+          </div>
+        )
+      }
     </div>
   )
 } 
