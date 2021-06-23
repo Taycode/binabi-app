@@ -1,0 +1,70 @@
+.address-section {
+  background-color: rgb(253, 253, 253);
+  .container {
+    max-width: 900px;
+    margin: auto;
+    padding: 60px 30px;
+    .section-title {
+      color: var(--theme);
+      font-size: 3em;
+      text-transform: capitalize;
+      @media screen and (max-width: 600px) {
+        font-size: 2.5em;
+      }
+      text-align: center;
+    }
+  }
+}
+
+.section-content {
+  display: grid;
+  margin-top: 30px;
+  grid-template-columns: repeat(2, 1fr);
+  @media screen and (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 30px;
+  }
+  .company-brand {
+    .logo {
+      height: 50px;
+    }
+  }
+
+  .physical-address {
+    font-size: 1.1em;
+    color: rgb(68, 68, 68);
+  }
+
+  .direct-contact {
+    margin-top: 10px;
+    >p {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--theme);
+      margin-bottom: 7px;
+    }
+  }
+
+  .social-media-section {
+    .social-header {
+      font-size: 1.4em;
+      color: rgb(177, 176, 176);
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .social-icon {
+      width: 45px;
+      height: 45px;
+      display: inline-block;
+      @for $i from 2 through 4 {
+        &:nth-child(#{$i}) {
+          margin-left: 20px;
+        }
+      }
+      img {
+        width: inherit;
+        height: inherit;
+      }
+    }
+  }
+}
