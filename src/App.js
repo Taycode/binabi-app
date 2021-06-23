@@ -1,13 +1,11 @@
 import "./App.css";
-import BodySection from "./components/body-content/BodySection";
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import LogInForm from "./components/body-content/LogInDetails/LogInForm";
-import ServiceSection from "./components/body-content/services/ServiceSection";
-import Dashboard from "./components/body-content/dashboard/Dashboard";
-import { ContactUs } from "./components/contact-us/Contact";
-import { PlaceAnOrder } from "./components/order/order";
+import { Home } from "./pages/home/home";
+import { PlaceAnOrder } from "./pages/order/order";
+import { ContactUs } from "./pages/contact-us/Contact";
+import { OurServices } from "./pages/services/services";
 
 function App() {
   return (
@@ -16,15 +14,12 @@ function App() {
         <Header />
         <div className="content-holder">
           <Switch>
-            <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/Binabi" exact>
-              <Redirect to="/" />
-            </Route>
-            <Route path="/services" exact component={ServiceSection} />
-            <Route path="/contact-us" exact component={ ContactUs } />
-            <Route path="/login" exact component={LogInForm} />
+            <Route path="/" exact component={Home} />
+            <Route path="/services" exact component={OurServices} />
+            <Route path="/contact-us" exact component={ContactUs} />
             <Route path="/order" exact component={PlaceAnOrder} />
-            <Route path="/" exact component={BodySection} />
+            {/* <Route path="/dashboard" exact component={Dashboard} /> */}
+            {/* <Route path="/login" exact component={LogInForm} /> */}
           </Switch>
           <Footer />
         </div>
