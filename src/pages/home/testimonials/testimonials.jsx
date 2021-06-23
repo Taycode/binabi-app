@@ -14,7 +14,7 @@ export const TestimonialsSection = () => (
       What our clients say
     </h1>
     <div className="container">
-      <Carousel autoplay={true}>
+      <Carousel autoplay={true} showThumbs={false}>
         {
           testimonies.map((el, i) => (
             <div key={'el'+i}>

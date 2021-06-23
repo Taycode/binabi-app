@@ -3,7 +3,7 @@ import './services.scss'
 import gas from '../../assets/icons/gas-white.png'
 import gasBottle from '../../assets/icons/gas-bottle-white.png'
 import { Link } from 'react-router-dom'
-let arr = ['', '', '', '', '']
+let arr = ['a', 'b', 'c', 'd', 'e']
 
 
 export const OurServices = () => (
@@ -14,7 +14,7 @@ export const OurServices = () => (
           Our Services
         </h1>
         <div className="boxes">
-          { arr.map(el => <hr className="border" /> ) }
+          { arr.map(el => <hr key={el} className="border" /> ) }
         </div>
       </div>
     </div>

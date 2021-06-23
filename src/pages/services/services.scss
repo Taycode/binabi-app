@@ -5,17 +5,17 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-color: rgb(243, 243, 243);
+  background-attachment: fixed;
   .header-grid {
     max-width: 1300px;
     margin: auto;
     .name {
       text-align: center;
       padding-left: 20px;
-      color: rgb(10, 14, 67);
+      color: rgb(1, 50, 58);
       font-size: 6rem;
       @media screen and (max-width: 700px) {
         font-size: 3rem;
-        // grid-template-columns: repeat(1, 1fr);
       }
       max-width: min-content;
       margin: auto;
@@ -26,12 +26,14 @@
       grid-gap: 7px;
       gap: 7px;
       margin: auto;
+      margin-top: 10px;
       width: max-content;
       .border {
         border: none;
         height: 7px;
         width: 100%;
-        background-color: rgba(22, 3, 145, 0.446);
+        border-radius: 1000px;
+        background-color: rgba(1, 40, 44, 0.446);
       }
     }
   }
@@ -114,6 +116,10 @@
       background-repeat: no-repeat;
       background-size: cover;
       background-color: rgb(243, 243, 243);
+      &:hover {
+        transform: rotate(0deg);
+      }
+      transition: 700ms ease-in-out transform;
       @media screen and (max-width: 700px) {
         display: none;
       }

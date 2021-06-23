@@ -1,7 +1,7 @@
 import "./App.css";
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Home } from "./pages/home/home";
 import { PlaceAnOrder } from "./pages/order/order";
 import { ContactUs } from "./pages/contact-us/Contact";
