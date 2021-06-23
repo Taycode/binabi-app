@@ -7,15 +7,14 @@ export default class Admin {
   }
 
   async currentAdmin () {
-    return new Promise ((resolve, reject ) => {
+    return new Promise (( resolve ) => {
       auth().onAuthStateChanged((adminUser) => {
-        if (!adminUser) {
-          reject(new Error('There is no signed in admin'))
-          return
-        }
-        // console.log(adminUser)
         resolve(adminUser)
       })
     })
+  }
+
+  async logOut () {
+    return auth().signOut()
   }
 }

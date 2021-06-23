@@ -7,8 +7,7 @@ import { PlaceAnOrder } from "./pages/order/order";
 import { ContactUs } from "./pages/contact-us/Contact";
 import { OurServices } from "./pages/services/services";
 import { AdminLogin } from "./pages/login/login";
-
-// Create me a context here
+import { AdminPanel } from "./pages/admin/admin";
 
 function App() {
   return (
@@ -21,7 +20,7 @@ function App() {
             <Route path="/services" exact component={OurServices} />
             <Route path="/contact-us" exact component={ContactUs} />
             <Route path="/order" exact component={PlaceAnOrder} />
-            {/* <Route path="/dashboard" exact component={Dashboard} /> */}
+            <Route path="/admin" component={AdminPanel} />
             <Route path="/login" exact component={AdminLogin} />
           </Switch>
           <Footer />

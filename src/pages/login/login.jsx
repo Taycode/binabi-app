@@ -4,45 +4,36 @@ import { FormField } from '../order/order'
 import Admin from '../../helpers/admin'
 import { useHistory } from 'react-router-dom'
 
-// Use me context here
-
 export const AdminLogin = () => {
   const admin = new Admin()
+  const history = useHistory()
   const [formData, setFormData] = useState({})
   const [ submitting, setSubmitting ] = useState(false)
   const [ submitError, setSubmitError ] = useState(null)
-
-  const history = useHistory()
 
   useEffect(() => {
     admin.currentAdmin()
     .then((adminUser) => {
       if (adminUser) {
-        history.push('/dashboard')
+        history.push('/admin/dashboard')
       }
-    }, () => {
-      // No loud am
     })
   })
-
+  
   const handleInput = (data) => {
     setFormData({...formData, ...data})
   }
-
+  
   const handleSubmit = () => {
     let values = Object.values(formData)
     if (values.length < 2 || values.includes(null)) return
-
     setSubmitting(true)
     setSubmitError(false)
-    console.log(formData)
     admin.authenticate(formData)
     .then(data => {
-      // Redirect to dashboard
-      console.log(data)
+      history.push('/admin/dashboard')
     }).catch(error => {
       setSubmitError(error.message)
-      console.log(error)
     }).finally(() => {
       setSubmitting(false)
     })
