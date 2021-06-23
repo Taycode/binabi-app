@@ -118,7 +118,7 @@ const RightOrderColumn = () => {
   )
 } 
 
-const FormField = ({ label, name, placeholder, pattern, errorMessage, type, onInput }) => {
+export const FormField = ({ label, name, placeholder, pattern, errorMessage, type, onInput }) => {
   const id = `f_${(Math.random() * 10000).toFixed(0)}`
   const [ error, setError ] = useState(null)
   const [ fieldValue, setFieldValue ] = useState('')
