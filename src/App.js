@@ -13,18 +13,18 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
-        <div className="content-holder">
           <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/services" exact component={OurServices} />
-            <Route path="/contact-us" exact component={ContactUs} />
-            <Route path="/order" exact component={PlaceAnOrder} />
             <Route path="/admin" component={AdminPanel} />
-            <Route path="/login" exact component={AdminLogin} />
+            <div className="content-holder">
+              <Header />
+              <Route path="/" exact component={Home} />
+              <Route path="/services" exact component={OurServices} />
+              <Route path="/contact-us" exact component={ContactUs} />
+              <Route path="/order" exact component={PlaceAnOrder} />
+              <Route path="/login" exact component={AdminLogin} />
+              <Footer />
+            </div>
           </Switch>
-          <Footer />
-        </div>
       </div>
     </Router>
   );
