@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 
 export const AdminLogin = () => {
   const admin = new Admin()
-  const history = useHistory()
+  const History = useHistory()
   const [formData, setFormData] = useState({})
   const [ submitting, setSubmitting ] = useState(false)
   const [ submitError, setSubmitError ] = useState(null)
@@ -15,7 +15,7 @@ export const AdminLogin = () => {
     admin.currentAdmin()
     .then((adminUser) => {
       if (adminUser) {
-        history.push('/admin/dashboard')
+        window.location.href = '/admin/dashboard'
       }
     })
   })
@@ -31,7 +31,7 @@ export const AdminLogin = () => {
     setSubmitError(false)
     admin.authenticate(formData)
     .then(data => {
-      history.push('/admin/dashboard')
+      History.push('/admin/dashboard')
     }).catch(error => {
       setSubmitError(error.message)
     }).finally(() => {
