@@ -129,9 +129,23 @@ const OrderView = ({order}) => {
   )
 }
 
+const Loader = () => {
+  return (
+    <div className="loading-component">
+      <div className="spinner">
+        
+      </div>
+      <p className="label">
+        please wait
+      </p>
+    </div>
+  )
+}
+
 export const AdminPanelOrders = () => {
   const [ orders, setOrders ] = useState([])
   const [ orderInView, setOrderInView ] = useState({})
+  const [ isFetchingOrders, setIsFetchingOrders ] = useState(true)
 
   const handleSetOrder = (orderId) => {
     setOrderInView(getOrder(orders, orderId))
@@ -143,12 +157,17 @@ export const AdminPanelOrders = () => {
       setOrders(data)
     }).catch(error => {
       console.log(error)
+    }).finally(() => {
+      setIsFetchingOrders(false)
     })
   }, [])
   return (
     <Router>
       <section className="page-container">
         <div className="orders-list">
+          {
+            isFetchingOrders && <Loader />
+          }
           <div className="order-min">
             {
               orders.map(order => 
