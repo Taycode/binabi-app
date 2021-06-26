@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from 'react-google-maps'
 import "./ContactSection.scss"
 import logo from '../../assets/images/logo.png'

@@ -1,0 +1,129 @@
+.service-header {
+  padding: 60px 10px;
+  background: linear-gradient(rgba(243, 243, 243, 0.926), rgba(243, 243, 243, 0.871)), url('../../assets/images/testimonials-background.jpg');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgb(243, 243, 243);
+  background-attachment: fixed;
+  .header-grid {
+    max-width: 1300px;
+    margin: auto;
+    .name {
+      text-align: center;
+      padding-left: 20px;
+      color: rgb(1, 50, 58);
+      font-size: 6rem;
+      @media screen and (max-width: 700px) {
+        font-size: 3rem;
+      }
+      max-width: min-content;
+      margin: auto;
+    }
+    .boxes {
+      display: grid;
+      grid-template-columns: repeat(5, 7px);
+      grid-gap: 7px;
+      gap: 7px;
+      margin: auto;
+      margin-top: 10px;
+      width: max-content;
+      .border {
+        border: none;
+        height: 7px;
+        width: 100%;
+        border-radius: 1000px;
+        background-color: rgba(1, 40, 44, 0.446);
+      }
+    }
+  }
+}
+.container {
+  max-width: 1100px;
+  margin: 70px auto;
+  .service-section {
+    display: grid;
+    padding: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    @media screen and (max-width: 700px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    min-height: 300px;
+    gap: 30px;
+    grid-gap: 30px;
+    perspective: 1000px;
+    margin-bottom: 80px;
+    .column-one {
+      .column-header {
+        display: flex;
+        align-items: center;
+        .icon {
+          $size: 50px;
+          width: $size;
+          height: $size;
+          display: block;
+          margin-right: 10px;
+          background-color: var(--theme);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          img {
+            width: 20px;
+            height: 20px;
+          }
+        }
+        .service-name {
+          font-size: 1.5em;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.02em;
+          color: var(--theme);
+        }
+      }
+      .column-body {
+        padding-left: 45px;
+        margin-top: 13px;
+        .service-text {
+          line-height: 2.2em;
+          font-size: 1.1em;
+          color: rgb(59, 104, 112);
+        }
+        .service-action {
+          padding: 0.5em 30px;
+          border: 2px solid var(--theme);
+          background-color: white;
+          color: var(--theme);
+          font-weight: medium;
+          font-size: 1.1em;
+          font-family: inherit;
+          border-radius: 4px;
+          display: block;
+          cursor: pointer;
+          margin-top: 35px;
+          text-transform: uppercase;
+        }
+      }
+    }
+    .column-two {
+      transform-style: preserve-3d;
+      &.right {
+        transform: rotateY(10deg);
+      }
+      transform: rotateY(-10deg);
+      background: linear-gradient(45deg, rgba(1, 15, 36, 0.589), rgba(1, 15, 36, 0.946)), url('../../assets/images/filling-of-gas.jpg');
+      background-position: top;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-color: rgb(243, 243, 243);
+      &:hover {
+        transform: rotate(0deg);
+      }
+      transition: 700ms ease-in-out transform;
+      @media screen and (max-width: 700px) {
+        display: none;
+      }
+    }
+  }
+
+}

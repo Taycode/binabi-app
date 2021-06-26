@@ -1,0 +1,71 @@
+.admin-header {
+  background-color: white;
+  width: 100%;
+  position: fixed;
+  height: 60px;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  border-bottom: 2px solid rgb(240, 245, 255);
+  &-container {
+    width: calc(100% - 280px);
+    margin-left: auto;
+    display: flex;
+    height: inherit;
+    justify-content: space-between;
+    padding: 0px 30px;
+    align-items: center;
+    .admin-search-sort {
+      .search-box {
+        height: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 350px;
+        .field {
+          margin: 0;
+          width: 100%;
+          .text-box {
+            height: 40px;
+            border-width: 2px;
+            font-size: 1em;
+            width: 100%;
+            &::placeholder {
+              color: gray;
+            }
+            &:focus {
+              border-width: 2px;
+            }
+          }
+        }
+      }
+    }
+    .admin-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .admin-status {
+        padding-right: 20px;
+        border-right: 2px solid rgb(192, 192, 192);
+        margin-right: 20px;
+        color: gray;
+        .admin-email {
+          font-weight: 600;
+          color: rgb(0, 89, 255);
+        }
+      }
+      .log-out-button {
+        padding: 5px 15px;
+        background-color: rgb(255, 154, 193);
+        &:hover {
+          background-color: rgb(255, 21, 111);
+        }
+        color: white;
+        border: none;
+        font-weight: 600;
+        border-radius: 4px;
+        font-family: inherit;
+      }
+    }
+  }
+}

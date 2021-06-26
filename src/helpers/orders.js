@@ -22,7 +22,12 @@ export default class Order {
         try {
             const orderRef = db.collection('orders');
             const orders = await orderRef.get();
-            return orders.docs.map(doc=>doc.data());
+            return orders.docs.map( (doc) => {
+                return {
+                    orderId: doc.id,
+                    ...doc.data()
+                }
+            });
         } catch (error) {
             throw (error);
         }

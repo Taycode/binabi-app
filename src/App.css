@@ -38,14 +38,14 @@ footer {
 label,
 input {
   display: block;
-  color: #000;
+  font-family: inherit;
 }
-
+/* 
 input {
   outline: none;
   width: 80%;
   margin: 10px auto;
-}
+} */
 
 @media (max-width: 450px) {
   .App {
