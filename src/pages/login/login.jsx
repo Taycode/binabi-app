@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './login.scss'
 import { FormField } from '../order/order'
 import Admin from '../../helpers/admin'
-import { useHistory } from 'react-router-dom'
 
 export const AdminLogin = () => {
   const admin = new Admin()
-  const History = useHistory()
   const [formData, setFormData] = useState({})
   const [ submitting, setSubmitting ] = useState(false)
   const [ submitError, setSubmitError ] = useState(null)
@@ -31,10 +29,9 @@ export const AdminLogin = () => {
     setSubmitError(false)
     admin.authenticate(formData)
     .then(data => {
-      History.push('/admin/dashboard')
+      window.location.href = '/admin/dashboard'
     }).catch(error => {
       setSubmitError(error.message)
-    }).finally(() => {
       setSubmitting(false)
     })
   }

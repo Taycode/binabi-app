@@ -5,6 +5,8 @@
   width: 280px;
   max-height: 100vh;
   overflow: auto;
+  z-index: 1;
+  border-right: 2px solid rgb(240, 245, 255);
   &-container {
     position: relative;
     min-height: 100vh;
