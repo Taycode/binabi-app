@@ -45,6 +45,7 @@ const RightOrderColumn = () => {
     orderInstance.createOrder(formData).then(() => {
       setSuccess(true)
     }).catch((e) => {
+      console.log(e)
       setSubmitError(true)
     }).finally(() => {
       setSubmitting(false)
