@@ -190,7 +190,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 400px;
+  min-height: 100px;
   .spinner {
     width: 50px;
     height: 50px;
@@ -210,5 +210,47 @@
     font-weight: 500;
     color: gray;
     margin-top: 16px;
+  }
+}
+
+.orders-load-button {
+  padding: 7px 20px;
+  border-radius: 3px;
+  border: none;
+  background: var(--theme);
+  color: white;
+  font-family: inherit;
+  font-weight: 500;
+  margin: auto;
+  display: block;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.order-header {
+  // background: rebeccapurple;
+  padding: 0px 40px;
+  height: 60px;
+  border-bottom: 2px solid rgb(240, 245, 255);
+  display: flex;
+  align-items: center;
+  .sorting-field {
+    max-width: max-content;
+    display: flex;
+    align-items: center;
+    &--label {
+      color: gray;
+      display: block;
+      margin-right: 8px;
+    }
+    &--select-box {
+      background: rgb(240, 245, 255);
+      border: 1px solid grey;
+      border-radius: 3px;
+      // appearance: none;
+      padding: 7px 16px;
+      font-family: inherit;
+      color: rgb(102, 102, 102);
+    }
   }
 }

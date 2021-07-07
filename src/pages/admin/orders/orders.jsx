@@ -6,7 +6,6 @@ import Order from '../../../helpers/orders'
 const order = new Order()
 
 function getOrder(orders, id) {
-  console.log('Finding order ', id)
   return orders.find(el => el.orderId === id)
 }
 
@@ -106,7 +105,7 @@ const OrderView = ({ order: currentOrder }) => {
   return (
     <section className="order-in-view">
       <div className="customer-card">
-        <h3 class="customer-name">
+        <h3 className="customer-name">
           {currentOrder.name}
         </h3>
         <p className="customer-address">
@@ -190,27 +189,37 @@ const Loader = () => {
 
 const AdminPanelOrdersHeader = ({ onSelectSortMethod }) => {
   return (
-    <div>
-      <p> Sort </p>
-      <select onChange={(e) => onSelectSortMethod(e.target.value)}>
-        <option value="0"> Default </option>
-        <option value="1"> Time (z-a) </option>
-        <option value="2"> Time (a-z) </option>
-        <option value="3"> Name (a-z) </option>
-        <option value="4"> Name (z-a) </option>
-        <option value="5"> No. of Kg (z-a) </option>
-        <option value="6"> No. of Kg (a-z) </option>
-        <option value="7"> Status (a-z) </option>
-        <option value="8"> Status (z-a) </option>
-      </select>
+    <div className="order-header">
+      <div className="sorting-field">
+        <p className="sorting-field--label"> Sort orders by:  </p>
+        <select className="sorting-field--select-box" onChange={(e) => onSelectSortMethod(e.target.value)}>
+          <option value={JSON.stringify({field: 'timeCreated', order: 'desc'})}> Default </option>
+          <option value={JSON.stringify({field: 'timeCreated', order: 'desc'})}> Time (z-a) </option>
+          <option value={JSON.stringify({field: 'timeCreated', order: 'asc'})}> Time (a-z) </option>
+          <option value={JSON.stringify({field: 'name', order: 'desc'})}> Name (a-z) </option>
+          <option value={JSON.stringify({field: 'name', order: 'asc'})}> Name (z-a) </option>
+          <option value={JSON.stringify({field: 'capacity', order: 'desc'})}> No. of Kg (z-a) </option>
+          <option value={JSON.stringify({field: 'capacity', order: 'asc'})}> No. of Kg (a-z) </option>
+          <option value={JSON.stringify({field: 'status', order: 'asc'})}> Status (a-z) </option>
+          <option value={JSON.stringify({field: 'status', order: 'desc'})}> Status (z-a) </option>
+        </select>
+      </div>
     </div>
   )
 }
 
+const FetchMoreOrdersButton = ({ onFetchOrders }) => {
+  return <button className="orders-load-button" onClick={onFetchOrders}>
+    Load More
+  </button>
+}
+
 export const AdminPanelOrders = () => {
   const [orders, setOrders] = useState([])
-  const [immutableOrders, setImmutableOrders] = useState([])
   const [orderInView, setOrderInView] = useState({})
+  const [sortOptions, setSortOptions] = useState({
+    field: 'timeCreated', order: 'desc'
+  })
   const [isFetchingOrders, setIsFetchingOrders] = useState(true)
 
   const handleSetOrder = (orderId) => {
@@ -218,35 +227,39 @@ export const AdminPanelOrders = () => {
   }
 
   useEffect(() => {
-    order.getOrders()
-      .then((data) => {
+    setIsFetchingOrders(true)
+    setOrders([])
+    order.getOrders(sortOptions.field, sortOptions.order)
+    .then((data) => {
         setOrders(data)
-        setImmutableOrders(data)
       }).catch(error => {
         console.log(error)
       }).finally(() => {
         setIsFetchingOrders(false)
       })
-  }, [])
-
+  }, [sortOptions])
+  
   function handleSort (method) {
-    let mutableOrderInstance = immutableOrders.slice()
-    if (method === '1') {
-      mutableOrderInstance = mutableOrderInstance.sort((a, b) => a.timeCreated > b.timeCreated ? -1 : 1)
-    } else if (method === '2') {
-      mutableOrderInstance = mutableOrderInstance.sort((a, b) => a.timeCreated < b.timeCreated ? -1 : 1)
-    }
-    setOrders(mutableOrderInstance)
+    setSortOptions(JSON.parse(method))
+  }
+  
+  function handleLoadMore () {
+    setIsFetchingOrders(true)
+    order.getOrders(sortOptions.field, sortOptions.order, orders[orders.length - 1][sortOptions.field])
+    .then((data) => {
+      setOrders(orders.concat(data))
+    }).catch(error => {
+      console.log('Error')
+    }).finally(() => {
+      setIsFetchingOrders(false)
+    })
   }
 
   return (
     <Router>
+      <AdminPanelOrdersHeader onSelectSortMethod={handleSort} />
       <section className="page-container">
-        <AdminPanelOrdersHeader onSelectSortMethod={handleSort} />
         <div className="orders-list">
-          {
-            isFetchingOrders && <Loader />
-          }
           <div className="order-min">
             {
               orders.map(order =>
@@ -254,9 +267,11 @@ export const AdminPanelOrders = () => {
                   key={order.orderId}
                   order={order}
                   onClick={handleSetOrder}
-                />)
-            }
+                  />)
+                }
           </div>
+          { isFetchingOrders && <Loader /> }
+          <FetchMoreOrdersButton onFetchOrders={handleLoadMore} />
         </div>
         <div className="orders-view">
           <Switch>

@@ -7,7 +7,7 @@ export default class Order {
                 name: data.name,
                 address: data.address,
                 phoneNumber: data.phoneNumber,
-                capacity: data.capacity,
+                capacity: parseFloat(data.capacity),
                 status: 'pending',
                 timeCreated: Date.now(),
             });
@@ -18,10 +18,13 @@ export default class Order {
         }
     }
 
-    async getOrders (){
+    async getOrders (sortMethod = 'timeCreated', sortDirection = 'desc', lastDoc){
+        const limit = 5
         try {
             const orderRef = db.collection('orders');
-            const orders = await orderRef.get();
+            const orders = lastDoc 
+                ? await orderRef.orderBy(sortMethod, sortDirection).startAfter(lastDoc).limit(limit).get() 
+                : await orderRef.orderBy(sortMethod, sortDirection).limit(limit).get();
             return orders.docs.map( (doc) => {
                 return {
                     orderId: doc.id,
