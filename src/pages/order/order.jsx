@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react/cjs/react.development'
 import Order from '../../helpers/orders'
+import { AppModal } from '../../components/app/modal/AppModal'
 import './order.scss'
 
 const orderInstance = new Order()
@@ -31,13 +33,15 @@ const RightOrderColumn = () => {
   const [ submitError, setSubmitError ] = useState(null)
   const [ success, setSuccess ] = useState(false)
 
+  const pricePerKg = 400
+
   function handleInput (data) {
     setFormData({...formData, ...data})
   }
 
   function handleSubmit () {
     let values = Object.values(formData)
-    if (values.length < 4 || values.includes(null)) return
+    if (values.length < 5 || values.includes(null)) return
 
     setSubmitting(true)
     setSubmitError(false)
@@ -50,6 +54,21 @@ const RightOrderColumn = () => {
     }).finally(() => {
       setSubmitting(false)
     })
+  }
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      price: formData.capacity ? (formData.capacity * pricePerKg).toFixed(2) : '0'
+    })
+  }, [formData.capacity])
+
+  function handleCloseModal () {
+    if (success) {
+      setFormData({})
+    }
+    setSuccess(false)
+    setSubmitError(null)
   }
 
   return (
@@ -95,26 +114,31 @@ const RightOrderColumn = () => {
         name="capacity"
         placeholder="1"
         type="number"
-        pattern={/[0-9]/}
+        pattern={/^[+]?\d+([.]\d+)?$/}
         errorMessage="Please enter a valid number"
         onInput={handleInput}
       />
+
+      <div className="price-box">
+        <p>
+          Total cost: 
+          <span className="price-box--price">
+            &#x20a6; { formData.price }
+          </span>
+        </p>
+      </div>
 
       <button className={`submit-button ${submitting && 'submitting'}`} onClick={handleSubmit} disabled={submitting}>
         Place your order
       </button>
       
-      { submitError && (<div className="error-box">
-        Error occurred while placing your order. Please try again. 
-      </div>)}
-
       {
-        success && (
-          <div className="success-box">
-            Thank you! Your order has been received successfully.
-          </div>
-        )
+        (submitError || success) && <AppModal
+          message={ submitError ? 'Error occurred while placing your order. Please try again.' : 'Thank you! Your order has been received successfully.' }
+          onClose={handleCloseModal}
+        />
       }
+
     </div>
   )
 } 

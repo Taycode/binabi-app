@@ -8,6 +8,7 @@ export default class Order {
                 address: data.address,
                 phoneNumber: data.phoneNumber,
                 capacity: parseFloat(data.capacity),
+                price: parseFloat(data.price),
                 status: 'pending',
                 timeCreated: Date.now(),
             });

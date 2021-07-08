@@ -8,7 +8,7 @@ const adminRoutes = [
   {id: 2, name: 'Orders', path:'/admin/orders', icon:'shop'},
 ] 
 
-export const AdminNavigation = () => {
+export const AdminNavigation = ({onCloseSideNav}) => {
   function handleExitToClient () {
     window.location.href = '/'
   }
@@ -21,6 +21,7 @@ export const AdminNavigation = () => {
         <ul className="navigation-items">
           {
             adminRoutes.map((el) => (
+              <div onClick={onCloseSideNav}>
               <NavLink className="navigation-item" activeClassName="active" to={el.path} key={el.id}>
                 <li>
                   <span className="material-icons item-icon">
@@ -31,6 +32,7 @@ export const AdminNavigation = () => {
                   </span>
                 </li>
               </NavLink>
+              </div>
             ))
           }
         </ul>
