@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './login.scss'
 import { FormField } from '../order/order'
 import Admin from '../../helpers/admin'
+import { AppModal } from '../../components/app/modal/AppModal'
 
 export const AdminLogin = () => {
   const admin = new Admin()
@@ -31,7 +32,7 @@ export const AdminLogin = () => {
     .then(data => {
       window.location.href = '/admin/dashboard'
     }).catch(error => {
-      setSubmitError(error.message)
+      setSubmitError(JSON.parse(error.message).error.message)
       setSubmitting(false)
     })
   }
@@ -63,9 +64,7 @@ export const AdminLogin = () => {
         <button className={`submit-button ${submitting && 'submitting'}`} onClick={handleSubmit}>
           Log in
         </button>
-        { submitError && (<div className="error-box">
-         { submitError || 'We could not log you in. Please check your inputs and try again'}
-        </div>)}
+        { submitError && <AppModal message={ submitError || 'We could not log you in. Please check your inputs and try again'} onClose={() => setSubmitError(false)} /> }
       </section>
     </main>
   )

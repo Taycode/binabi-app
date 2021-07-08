@@ -32,6 +32,7 @@ export default class Order {
                 }
             });
         } catch (error) {
+            console.log('error')
             throw (error);
         }
     }

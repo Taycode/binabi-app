@@ -3,6 +3,7 @@ import { NavLink, BrowserRouter as Router, Switch, Route } from 'react-router-do
 import './orders.scss'
 import gasBottle from '../../../assets/icons/gas-bottle-dark.png'
 import Order from '../../../helpers/orders'
+import { AppModal } from '../../../components/app/modal/AppModal'
 const order = new Order()
 
 function getOrder(orders, id) {
@@ -41,6 +42,21 @@ const NoOrderInView = () => {
       <h1>
         No Selected Order
       </h1>
+    </div>
+  )
+}
+
+const NoOrdersFound = () => {
+  return (
+    <div className="no-orders">
+      <div className="no-orders--container">
+        <i className="material-icons">
+          shopping_basket
+        </i>
+        <h1 className="no-orders--container__title">
+          Your customers are yet to place any orders. Check back soon!
+        </h1>
+      </div>
     </div>
   )
 }
@@ -97,6 +113,11 @@ const OrderView = ({ order: currentOrder }) => {
       })
   }
 
+  const handleCloseAlertBox = () => {
+    setUpdateError(false)
+    setUpdateSuccess(false)
+  }
+
   useEffect(() => {
     setUpdateError(false)
     setUpdateSuccess(false)
@@ -150,25 +171,21 @@ const OrderView = ({ order: currentOrder }) => {
             {getOrderDate(currentOrder.timeCreated)}
           </OrderDetail>
 
-          <button className={`update-order-status ${currentOrder.status} ${updating && 'updating'}`} onClick={ () => handleUpdateOrder({status: 'completed'})}>
-            Mark as completed
-          </button>
-
-          {
-            updateError && (
-              <div className="error-box">
-                {updateError || 'An error occurred while updating orderStatus'}
-              </div>
-            )
-          }
-          {
-            updateSuccess && (
-              <div className="success-box">
-                Order Status updated successfully!
-              </div>
-            )
-          }
         </div>
+        <div className="order-details-actions">
+          { currentOrder.status !== 'completed' && <button className={`update-order-status completed ${updating && 'updating'}`} onClick={ () => handleUpdateOrder({status: 'completed'})}>
+            Mark as completed
+          </button>}
+          { currentOrder.status !== 'cancelled' && <button className={`update-order-status cancelled ${updating && 'updating'}`} onClick={ () => handleUpdateOrder({status: 'cancelled'})}>
+            Mark as cancelled
+          </button> }
+        </div>
+
+        { (updateError || updateSuccess) && <AppModal 
+            message={updateError ? updateError || 'An error occurred while updating orderStatus' : 'Order Status updated successfully!' }
+            onClose={handleCloseAlertBox}
+          /> 
+        }
       </div>
     </section>
   )
@@ -221,6 +238,9 @@ export const AdminPanelOrders = () => {
     field: 'timeCreated', order: 'desc'
   })
   const [isFetchingOrders, setIsFetchingOrders] = useState(true)
+  const [ error, setError] = useState(null)
+  const [ fetchedFirstBatch, setFetchedFirstBatch ] = useState(false)
+  const [ noOrdersFound, setNoOrdersFound ] = useState(false)
 
   const handleSetOrder = (orderId) => {
     setOrderInView(getOrder(orders, orderId))
@@ -229,34 +249,50 @@ export const AdminPanelOrders = () => {
   useEffect(() => {
     setIsFetchingOrders(true)
     setOrders([])
+    setNoOrdersFound(false)
+    setFetchedFirstBatch(false)
     order.getOrders(sortOptions.field, sortOptions.order)
     .then((data) => {
+      if (data.length < 1) {
+        setNoOrdersFound(true)
+      } else {
         setOrders(data)
+        setFetchedFirstBatch(true)
+      }
       }).catch(error => {
-        console.log(error)
+        setError('Cannot fetch orders at this time. Please try again.')
       }).finally(() => {
         setIsFetchingOrders(false)
       })
-  }, [sortOptions])
+    }, [sortOptions])
+    
+    function handleSort (method) {
+      setSortOptions(JSON.parse(method))
+    }
   
-  function handleSort (method) {
-    setSortOptions(JSON.parse(method))
-  }
-  
-  function handleLoadMore () {
-    setIsFetchingOrders(true)
-    order.getOrders(sortOptions.field, sortOptions.order, orders[orders.length - 1][sortOptions.field])
+    function handleLoadMore () {
+      setIsFetchingOrders(true)
+      order.getOrders(sortOptions.field, sortOptions.order, orders.length > 0 && orders[orders.length - 1][sortOptions.field])
     .then((data) => {
-      setOrders(orders.concat(data))
+      if (data.length < 1) {
+        setError('No more orders to fetch!')
+      } else {
+        setOrders(orders.concat(data))
+      }
     }).catch(error => {
-      console.log('Error')
+      setError('Cannot fetch orders at this time. Please try again.')
     }).finally(() => {
       setIsFetchingOrders(false)
     })
   }
 
+  function handleCloseError () {
+    setError(null)
+  }
+
   return (
     <Router>
+      { error && <AppModal message={error} onClose={handleCloseError} /> }
       <AdminPanelOrdersHeader onSelectSortMethod={handleSort} />
       <section className="page-container">
         <div className="orders-list">
@@ -271,7 +307,8 @@ export const AdminPanelOrders = () => {
                 }
           </div>
           { isFetchingOrders && <Loader /> }
-          <FetchMoreOrdersButton onFetchOrders={handleLoadMore} />
+          { fetchedFirstBatch && <FetchMoreOrdersButton onFetchOrders={handleLoadMore} /> }
+          { noOrdersFound && <NoOrdersFound /> }
         </div>
         <div className="orders-view">
           <Switch>

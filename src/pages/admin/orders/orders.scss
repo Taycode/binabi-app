@@ -69,17 +69,17 @@
       color: rgb(255, 119, 21);
     }
     &.completed {
-      color: rgb(15, 211, 87)
+      color: #05d086;
     }
-    &.failed {
-      color: rgb(252, 35, 64)
+    &.cancelled {
+      color: rgb(252, 35, 64);
     }
   }
 }
 
 .order-in-view {
   .customer-card {
-    background: var(--theme);
+    background: #302621;
     min-height: 200px;
     width: 95%;
     margin: 10px auto;
@@ -128,10 +128,16 @@
             color: rgb(255, 119, 21);
           }
           &.completed {
-            color: rgb(15, 211, 87);
+            color: #05d086;
+          }
+          &.cancelled {
+            color: rgb(252, 35, 64);
           }
         }
       }
+    }
+    
+    .order-details-actions {
       .update-order-status {
         width: 100%;
         padding: 7px;
@@ -142,8 +148,12 @@
         border-radius: 5px;
         font-family: inherit;
         cursor: pointer;
+        margin-right: 30px;
         &.completed {
-          background: rgb(143, 143, 143);
+          background: #05d086;
+        }
+        &.cancelled {
+          background-color: rgb(252, 35, 64);
         }
         &.updating {
           position: relative;
@@ -180,6 +190,7 @@
           }
         }
       }
+      display: flex;
     }
   }
 }
@@ -252,5 +263,20 @@
       font-family: inherit;
       color: rgb(102, 102, 102);
     }
+  }
+}
+
+.no-orders {
+  max-width: 500px;
+  margin: 50px auto;
+  text-align: center;
+  color: gray;
+  .material-icons {
+    font-size: 4em;
+    display: block;
+    margin-bottom: 30px;
+  }
+  &__title {
+    font-weight: 500;
   }
 }
