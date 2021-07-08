@@ -158,7 +158,7 @@ const OrderView = ({ order: currentOrder }) => {
           {
             updateError && (
               <div className="error-box">
-                {updateError || 'An error occcurred while updating orderStatus'}
+                {updateError || 'An error occurred while updating orderStatus'}
               </div>
             )
           }
@@ -188,8 +188,28 @@ const Loader = () => {
   )
 }
 
+const AdminPanelOrdersHeader = ({ onSelectSortMethod }) => {
+  return (
+    <div>
+      <p> Sort </p>
+      <select onChange={(e) => onSelectSortMethod(e.target.value)}>
+        <option value="0"> Default </option>
+        <option value="1"> Time (z-a) </option>
+        <option value="2"> Time (a-z) </option>
+        <option value="3"> Name (a-z) </option>
+        <option value="4"> Name (z-a) </option>
+        <option value="5"> No. of Kg (z-a) </option>
+        <option value="6"> No. of Kg (a-z) </option>
+        <option value="7"> Status (a-z) </option>
+        <option value="8"> Status (z-a) </option>
+      </select>
+    </div>
+  )
+}
+
 export const AdminPanelOrders = () => {
   const [orders, setOrders] = useState([])
+  const [immutableOrders, setImmutableOrders] = useState([])
   const [orderInView, setOrderInView] = useState({})
   const [isFetchingOrders, setIsFetchingOrders] = useState(true)
 
@@ -201,15 +221,28 @@ export const AdminPanelOrders = () => {
     order.getOrders()
       .then((data) => {
         setOrders(data)
+        setImmutableOrders(data)
       }).catch(error => {
         console.log(error)
       }).finally(() => {
         setIsFetchingOrders(false)
       })
   }, [])
+
+  function handleSort (method) {
+    let mutableOrderInstance = immutableOrders.slice()
+    if (method === '1') {
+      mutableOrderInstance = mutableOrderInstance.sort((a, b) => a.timeCreated > b.timeCreated ? -1 : 1)
+    } else if (method === '2') {
+      mutableOrderInstance = mutableOrderInstance.sort((a, b) => a.timeCreated < b.timeCreated ? -1 : 1)
+    }
+    setOrders(mutableOrderInstance)
+  }
+
   return (
     <Router>
       <section className="page-container">
+        <AdminPanelOrdersHeader onSelectSortMethod={handleSort} />
         <div className="orders-list">
           {
             isFetchingOrders && <Loader />
