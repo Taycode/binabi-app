@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink, BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { NavLink, BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom'
 import './orders.scss'
 import gasBottle from '../../../assets/icons/gas-bottle-dark.png'
 import Order from '../../../helpers/orders'
@@ -23,7 +23,7 @@ function getOrderDate(time) {
   return `${day} ${month}, ${year}`
 }
 
-function getTimeOfOrder(time) {
+function getTimeOfOrder(time) { 
   const date = new Date(time)
   let [hours, minutes] = [date.getHours(), date.getMinutes()]
   let period = hours > 12 ? 'PM' : 'AM'
@@ -94,7 +94,7 @@ const OrderDetail = ({ label, children }) => (
   </div>
 )
 
-const OrderView = ({ order: currentOrder }) => {
+const OrderView = ({ order: currentOrder, isActive, backAction }) => {
   const [ updating, setUpdating ] = useState(false)
   const [updateError, setUpdateError] = useState(false)
   const [updateSuccess, setUpdateSuccess] = useState(false)
@@ -125,6 +125,16 @@ const OrderView = ({ order: currentOrder }) => {
 
   return (
     <section className="order-in-view">
+      <div className="exit-action-container" onClick={backAction}>
+        <div className="exit-action-container--icon">
+          <span className="material-icons">
+            arrow_back
+          </span>
+        </div>
+        <p className="exit-action-container--action-name">
+          Back
+        </p>
+      </div>
       <div className="customer-card">
         <h3 className="customer-name">
           {currentOrder.name}
@@ -213,8 +223,8 @@ const AdminPanelOrdersHeader = ({ onSelectSortMethod }) => {
           <option value={JSON.stringify({field: 'timeCreated', order: 'desc'})}> Default </option>
           <option value={JSON.stringify({field: 'timeCreated', order: 'desc'})}> Time (z-a) </option>
           <option value={JSON.stringify({field: 'timeCreated', order: 'asc'})}> Time (a-z) </option>
-          <option value={JSON.stringify({field: 'name', order: 'desc'})}> Name (a-z) </option>
-          <option value={JSON.stringify({field: 'name', order: 'asc'})}> Name (z-a) </option>
+          <option value={JSON.stringify({field: 'name', order: 'asc'})}> Name (a-z) </option>
+          <option value={JSON.stringify({field: 'name', order: 'desc'})}> Name (z-a) </option>
           <option value={JSON.stringify({field: 'capacity', order: 'desc'})}> No. of Kg (z-a) </option>
           <option value={JSON.stringify({field: 'capacity', order: 'asc'})}> No. of Kg (a-z) </option>
           <option value={JSON.stringify({field: 'status', order: 'asc'})}> Status (a-z) </option>
@@ -290,6 +300,12 @@ export const AdminPanelOrders = () => {
     setError(null)
   }
 
+  const history = useHistory()  
+  function backActionForOrderInView () {
+    setOrderInView({})
+    history.push('/admin/orders')
+  }
+
   return (
     <Router>
       { error && <AppModal message={error} onClose={handleCloseError} /> }
@@ -310,10 +326,10 @@ export const AdminPanelOrders = () => {
           { fetchedFirstBatch && <FetchMoreOrdersButton onFetchOrders={handleLoadMore} /> }
           { noOrdersFound && <NoOrdersFound /> }
         </div>
-        <div className="orders-view">
+        <div className={`orders-view ${orderInView.orderId ? 'in-view' : ''}`}>
           <Switch>
             <Route path="/admin/orders/:orderId">
-              <OrderView order={orderInView} />
+              { orderInView.orderId && <OrderView order={orderInView} isActive backAction={backActionForOrderInView} /> }
             </Route>
           </Switch>
           {

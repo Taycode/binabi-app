@@ -9,12 +9,21 @@
     height: 100vh;
     overflow: auto;
     flex-shrink: 0;
+    @media screen and (max-width: 1000px) {
+      display: none;
+      &.open {
+        position: fixed;
+        z-index: 40;
+        display: block;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.789);
+      }
+    }
   }
   .admin-pages {
     padding-top: 60px;
     height: 100vh;
     max-height: 100vh;
-    // width: calc(100% - 300px);
     flex-grow: 1;
     overflow: auto;
     flex-shrink: 0;

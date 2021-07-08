@@ -12,7 +12,7 @@ const SearchBox = () => {
   )
 }
 
-export const AdminHeader = ({email}) => {
+export const AdminHeader = ({email, onOpenSideNav}) => {
 
   const handleLogout = () => {
     const admin = new Admin()
@@ -26,10 +26,17 @@ export const AdminHeader = ({email}) => {
     <header className="admin-header">
       <div className="admin-header-container">
         <div className="admin-search-sort">
-          <SearchBox />
+          {/* <SearchBox /> */}
+          <span className="material-icons menu-icon" onClick={onOpenSideNav}>
+            menu
+          </span>
         </div>
         <div className="admin-action">
-          <p className="admin-status"> Signed in as <span className="admin-email"> {email} </span> </p>
+          <p className="admin-status"> 
+          <span className="admin-status-label">
+            Signed in as
+          </span> 
+          <span className="admin-email"> {email} </span> </p>
           <button className="log-out-button" onClick={handleLogout}>
             Log out
           </button>
