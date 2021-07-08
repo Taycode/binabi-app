@@ -3,10 +3,10 @@ import { NavLink, BrowserRouter as Router, Switch, Route } from 'react-router-do
 import './orders.scss'
 import gasBottle from '../../../assets/icons/gas-bottle-dark.png'
 import Order from '../../../helpers/orders'
+import { AppModal } from '../../../components/app/modal/AppModal'
 const order = new Order()
 
 function getOrder(orders, id) {
-  console.log('Finding order ', id)
   return orders.find(el => el.orderId === id)
 }
 
@@ -42,6 +42,21 @@ const NoOrderInView = () => {
       <h1>
         No Selected Order
       </h1>
+    </div>
+  )
+}
+
+const NoOrdersFound = () => {
+  return (
+    <div className="no-orders">
+      <div className="no-orders--container">
+        <i className="material-icons">
+          shopping_basket
+        </i>
+        <h1 className="no-orders--container__title">
+          Your customers are yet to place any orders. Check back soon!
+        </h1>
+      </div>
     </div>
   )
 }
@@ -98,6 +113,11 @@ const OrderView = ({ order: currentOrder }) => {
       })
   }
 
+  const handleCloseAlertBox = () => {
+    setUpdateError(false)
+    setUpdateSuccess(false)
+  }
+
   useEffect(() => {
     setUpdateError(false)
     setUpdateSuccess(false)
@@ -106,7 +126,7 @@ const OrderView = ({ order: currentOrder }) => {
   return (
     <section className="order-in-view">
       <div className="customer-card">
-        <h3 class="customer-name">
+        <h3 className="customer-name">
           {currentOrder.name}
         </h3>
         <p className="customer-address">
@@ -151,25 +171,21 @@ const OrderView = ({ order: currentOrder }) => {
             {getOrderDate(currentOrder.timeCreated)}
           </OrderDetail>
 
-          <button className={`update-order-status ${currentOrder.status} ${updating && 'updating'}`} onClick={ () => handleUpdateOrder({status: 'completed'})}>
-            Mark as completed
-          </button>
-
-          {
-            updateError && (
-              <div className="error-box">
-                {updateError || 'An error occurred while updating orderStatus'}
-              </div>
-            )
-          }
-          {
-            updateSuccess && (
-              <div className="success-box">
-                Order Status updated successfully!
-              </div>
-            )
-          }
         </div>
+        <div className="order-details-actions">
+          { currentOrder.status !== 'completed' && <button className={`update-order-status completed ${updating && 'updating'}`} onClick={ () => handleUpdateOrder({status: 'completed'})}>
+            Mark as completed
+          </button>}
+          { currentOrder.status !== 'cancelled' && <button className={`update-order-status cancelled ${updating && 'updating'}`} onClick={ () => handleUpdateOrder({status: 'cancelled'})}>
+            Mark as cancelled
+          </button> }
+        </div>
+
+        { (updateError || updateSuccess) && <AppModal 
+            message={updateError ? updateError || 'An error occurred while updating orderStatus' : 'Order Status updated successfully!' }
+            onClose={handleCloseAlertBox}
+          /> 
+        }
       </div>
     </section>
   )
@@ -190,63 +206,96 @@ const Loader = () => {
 
 const AdminPanelOrdersHeader = ({ onSelectSortMethod }) => {
   return (
-    <div>
-      <p> Sort </p>
-      <select onChange={(e) => onSelectSortMethod(e.target.value)}>
-        <option value="0"> Default </option>
-        <option value="1"> Time (z-a) </option>
-        <option value="2"> Time (a-z) </option>
-        <option value="3"> Name (a-z) </option>
-        <option value="4"> Name (z-a) </option>
-        <option value="5"> No. of Kg (z-a) </option>
-        <option value="6"> No. of Kg (a-z) </option>
-        <option value="7"> Status (a-z) </option>
-        <option value="8"> Status (z-a) </option>
-      </select>
+    <div className="order-header">
+      <div className="sorting-field">
+        <p className="sorting-field--label"> Sort orders by:  </p>
+        <select className="sorting-field--select-box" onChange={(e) => onSelectSortMethod(e.target.value)}>
+          <option value={JSON.stringify({field: 'timeCreated', order: 'desc'})}> Default </option>
+          <option value={JSON.stringify({field: 'timeCreated', order: 'desc'})}> Time (z-a) </option>
+          <option value={JSON.stringify({field: 'timeCreated', order: 'asc'})}> Time (a-z) </option>
+          <option value={JSON.stringify({field: 'name', order: 'desc'})}> Name (a-z) </option>
+          <option value={JSON.stringify({field: 'name', order: 'asc'})}> Name (z-a) </option>
+          <option value={JSON.stringify({field: 'capacity', order: 'desc'})}> No. of Kg (z-a) </option>
+          <option value={JSON.stringify({field: 'capacity', order: 'asc'})}> No. of Kg (a-z) </option>
+          <option value={JSON.stringify({field: 'status', order: 'asc'})}> Status (a-z) </option>
+          <option value={JSON.stringify({field: 'status', order: 'desc'})}> Status (z-a) </option>
+        </select>
+      </div>
     </div>
   )
 }
 
+const FetchMoreOrdersButton = ({ onFetchOrders }) => {
+  return <button className="orders-load-button" onClick={onFetchOrders}>
+    Load More
+  </button>
+}
+
 export const AdminPanelOrders = () => {
   const [orders, setOrders] = useState([])
-  const [immutableOrders, setImmutableOrders] = useState([])
   const [orderInView, setOrderInView] = useState({})
+  const [sortOptions, setSortOptions] = useState({
+    field: 'timeCreated', order: 'desc'
+  })
   const [isFetchingOrders, setIsFetchingOrders] = useState(true)
+  const [ error, setError] = useState(null)
+  const [ fetchedFirstBatch, setFetchedFirstBatch ] = useState(false)
+  const [ noOrdersFound, setNoOrdersFound ] = useState(false)
 
   const handleSetOrder = (orderId) => {
     setOrderInView(getOrder(orders, orderId))
   }
 
   useEffect(() => {
-    order.getOrders()
-      .then((data) => {
+    setIsFetchingOrders(true)
+    setOrders([])
+    setNoOrdersFound(false)
+    setFetchedFirstBatch(false)
+    order.getOrders(sortOptions.field, sortOptions.order)
+    .then((data) => {
+      if (data.length < 1) {
+        setNoOrdersFound(true)
+      } else {
         setOrders(data)
-        setImmutableOrders(data)
+        setFetchedFirstBatch(true)
+      }
       }).catch(error => {
-        console.log(error)
+        setError('Cannot fetch orders at this time. Please try again.')
       }).finally(() => {
         setIsFetchingOrders(false)
       })
-  }, [])
-
-  function handleSort (method) {
-    let mutableOrderInstance = immutableOrders.slice()
-    if (method === '1') {
-      mutableOrderInstance = mutableOrderInstance.sort((a, b) => a.timeCreated > b.timeCreated ? -1 : 1)
-    } else if (method === '2') {
-      mutableOrderInstance = mutableOrderInstance.sort((a, b) => a.timeCreated < b.timeCreated ? -1 : 1)
+    }, [sortOptions])
+    
+    function handleSort (method) {
+      setSortOptions(JSON.parse(method))
     }
-    setOrders(mutableOrderInstance)
+  
+    function handleLoadMore () {
+      setIsFetchingOrders(true)
+      order.getOrders(sortOptions.field, sortOptions.order, orders.length > 0 && orders[orders.length - 1][sortOptions.field])
+    .then((data) => {
+      if (data.length < 1) {
+        setError('No more orders to fetch!')
+      } else {
+        setOrders(orders.concat(data))
+      }
+    }).catch(error => {
+      setError('Cannot fetch orders at this time. Please try again.')
+    }).finally(() => {
+      setIsFetchingOrders(false)
+    })
+  }
+
+  function handleCloseError () {
+    setError(null)
   }
 
   return (
     <Router>
+      { error && <AppModal message={error} onClose={handleCloseError} /> }
+      <AdminPanelOrdersHeader onSelectSortMethod={handleSort} />
       <section className="page-container">
-        <AdminPanelOrdersHeader onSelectSortMethod={handleSort} />
         <div className="orders-list">
-          {
-            isFetchingOrders && <Loader />
-          }
           <div className="order-min">
             {
               orders.map(order =>
@@ -254,9 +303,12 @@ export const AdminPanelOrders = () => {
                   key={order.orderId}
                   order={order}
                   onClick={handleSetOrder}
-                />)
-            }
+                  />)
+                }
           </div>
+          { isFetchingOrders && <Loader /> }
+          { fetchedFirstBatch && <FetchMoreOrdersButton onFetchOrders={handleLoadMore} /> }
+          { noOrdersFound && <NoOrdersFound /> }
         </div>
         <div className="orders-view">
           <Switch>

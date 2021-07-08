@@ -1,0 +1,80 @@
+.modal-overlay {
+  width: 100%;
+  z-index: 100;
+  min-height: 100vh;
+  background: rgba(255, 255, 255, 0.823);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-in 300ms ease-in-out 0s 1 normal forwards;
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    } to {
+      opacity: 1;
+    }
+  }
+  .modal-container {
+    max-width: 500px;
+    min-height: 300px;
+    width: 96%;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 2px 4px 14px rgba($color: #000000, $alpha: 0.1);
+    padding: 20px 40px;
+    &--title-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid rgb(247, 247, 247);
+      padding-bottom: 10px;
+      &__message {
+        font-size: 1.2em;
+        color: rgb(42, 95, 194);
+        font-weight: 500;
+      }
+      &__icon {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(237, 237, 237);
+        color: gray;
+        padding: 3px;
+        border-radius: 5px;
+      }
+    }
+
+    &--content-body {
+      padding: 20px 0px;
+      min-height: 130px;
+      color: rgb(82, 82, 82);
+      line-height: 1.6em;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 400px;
+      text-align: center;
+      margin: auto;
+    }
+
+    &--actions-body {
+      &__button {
+        background-color: var(--theme);
+        color: white;
+        padding: 8px 20px;
+        font-family: inherit;
+        border: none;
+        border-radius: 5px;
+        letter-spacing: 0.05em;
+        margin-left: auto;
+        display: block;
+        margin-top: 30px;
+        cursor: pointer;
+      }
+    }    
+  }
+}
