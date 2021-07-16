@@ -74,7 +74,17 @@ export default class Order {
     async setPrice(data) {
         try {
             const priceRef = db.collection('admin').doc('price');
-            await priceRef.update({...data});
+            await priceRef.set({...data});
+            return (await priceRef.get()).data()
+        } catch (error) {
+            throw error;
+        }
+
+    }
+
+    async getPrice() {
+        try {
+            const priceRef = db.collection('admin').doc('price');
             return (await priceRef.get()).data()
         } catch (error) {
             throw error;
