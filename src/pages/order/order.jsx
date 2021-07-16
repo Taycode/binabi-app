@@ -32,8 +32,7 @@ const RightOrderColumn = () => {
   const [ submitting, setSubmitting ] = useState(false)
   const [ submitError, setSubmitError ] = useState(null)
   const [ success, setSuccess ] = useState(false)
-
-  const pricePerKg = 400
+  const [ pricePerKg, setPricePerKg] = useState(0)
 
   function handleInput (data) {
     setFormData({...formData, ...data})
@@ -55,6 +54,15 @@ const RightOrderColumn = () => {
       setSubmitting(false)
     })
   }
+
+  useEffect(() => {
+    orderInstance.getPrice()
+    .then((data) => {
+      setPricePerKg(data ? data.price : 0)
+    }, () => {
+      // Handle fetch price error
+    })
+  },[])
 
   useEffect(() => {
     setFormData({
