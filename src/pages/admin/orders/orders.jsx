@@ -94,35 +94,46 @@ const OrderDetail = ({ label, children }) => (
   </div>
 )
 
-const OrderView = ({ order: currentOrder, isActive, backAction }) => {
+const UpdateOrderStatusButton = ({currentOrder, children, status, setOrderStatus }) => {
   const [ updating, setUpdating ] = useState(false)
-  const [updateError, setUpdateError] = useState(false)
-  const [updateSuccess, setUpdateSuccess] = useState(false)
-
-  const handleUpdateOrder = (field) => {
-    setUpdating(true)
-    setUpdateError(false)
-    setUpdateSuccess(false)
-    order.updateOrder(currentOrder.orderId, field )
-    .then(() => {
-        setUpdateSuccess(true)
-      }).catch((error) => {
-        setUpdateError(error.message)
-      }).finally(() => {
-        setUpdating(false)
-      })
-  }
+  const [ updateError, setUpdateError] = useState(false)
+  const [ updateSuccess, setUpdateSuccess] = useState(false)
 
   const handleCloseAlertBox = () => {
     setUpdateError(false)
     setUpdateSuccess(false)
   }
 
-  useEffect(() => {
+  const handleUpdateOrder = () => {
+    setUpdating(true)
     setUpdateError(false)
     setUpdateSuccess(false)
-  }, [currentOrder])
+    order.updateOrder(currentOrder.orderId, { status } )
+    .then(() => {
+        setUpdateSuccess(true)
+        setOrderStatus({ ...currentOrder, status })
+      }).catch((error) => {
+        setUpdateError(error.message)
+      }).finally(() => {
+        setUpdating(false)
+      })
+  }
+  return (
+    <>
+      <button className={`update-order-status ${status} ${updating && 'updating'}`} onClick={ () => handleUpdateOrder({status})}>
+        { children }
+      </button>
 
+      { (updateError || updateSuccess) && <AppModal 
+          message={updateError ? updateError || 'An error occurred while updating orderStatus' : 'Order Status updated successfully!' }
+          onClose={handleCloseAlertBox}
+        /> 
+      }
+    </>
+  )
+}
+
+const OrderView = ({ order: currentOrder, isActive, backAction, onUpdateOrder }) => {
   return (
     <section className="order-in-view">
       <div className="exit-action-container" onClick={backAction}>
@@ -183,19 +194,9 @@ const OrderView = ({ order: currentOrder, isActive, backAction }) => {
 
         </div>
         <div className="order-details-actions">
-          { currentOrder.status !== 'completed' && <button className={`update-order-status completed ${updating && 'updating'}`} onClick={ () => handleUpdateOrder({status: 'completed'})}>
-            Mark as completed
-          </button>}
-          { currentOrder.status !== 'cancelled' && <button className={`update-order-status cancelled ${updating && 'updating'}`} onClick={ () => handleUpdateOrder({status: 'cancelled'})}>
-            Mark as cancelled
-          </button> }
+          { currentOrder.status !== 'completed' && <UpdateOrderStatusButton currentOrder={currentOrder} status="completed" setOrderStatus={onUpdateOrder}> Mark as completed </UpdateOrderStatusButton> }
+          { currentOrder.status !== 'cancelled' && <UpdateOrderStatusButton currentOrder={currentOrder} status="cancelled" setOrderStatus={onUpdateOrder} > Mark as cancelled </UpdateOrderStatusButton> }
         </div>
-
-        { (updateError || updateSuccess) && <AppModal 
-            message={updateError ? updateError || 'An error occurred while updating orderStatus' : 'Order Status updated successfully!' }
-            onClose={handleCloseAlertBox}
-          /> 
-        }
       </div>
     </section>
   )
@@ -289,7 +290,7 @@ export const AdminPanelOrders = () => {
       } else {
         setOrders(orders.concat(data))
       }
-    }).catch(error => {
+    }).catch( error => {
       setError('Cannot fetch orders at this time. Please try again.')
     }).finally(() => {
       setIsFetchingOrders(false)
@@ -304,6 +305,17 @@ export const AdminPanelOrders = () => {
   function backActionForOrderInView () {
     setOrderInView({})
     history.push('/admin/orders')
+  }
+
+  function popInUpdatedOrder (updatedOrder) {
+    let mutableOrders = orders.slice()
+    mutableOrders.map((el) => {
+      if (el.orderId === updatedOrder.orderId) {
+        el.status = updatedOrder.status
+      }
+      return el
+    })
+    setOrders(mutableOrders)
   }
 
   return (
@@ -329,7 +341,7 @@ export const AdminPanelOrders = () => {
         <div className={`orders-view ${orderInView.orderId ? 'in-view' : ''}`}>
           <Switch>
             <Route path="/admin/orders/:orderId">
-              { orderInView.orderId && <OrderView order={orderInView} isActive backAction={backActionForOrderInView} /> }
+              { orderInView.orderId && <OrderView order={orderInView} isActive backAction={backActionForOrderInView} onUpdateOrder={(uOrder) => popInUpdatedOrder(uOrder)} /> }
             </Route>
           </Switch>
           {
