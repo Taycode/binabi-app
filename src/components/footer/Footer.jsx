@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Footer.css";
 import {Link} from "react-router-dom"
 import logoImg from "../../assets/images/logo.png"
 import facebook from "../../assets/images/icon-facebook.svg"
 import twitter from "../../assets/images/icon-twitter.svg"
 import instagram from "../../assets/images/icon-instagram.svg"
+import Admin from "../../helpers/admin";
 
 function Footer() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    new Admin().currentAdmin()
+    .then((adminUser) => {
+      if (adminUser) {
+        setIsLoggedIn(true)
+      }
+    })
+  }, [])
+
   return (
     <footer>
       <div className="footer-section">
@@ -25,7 +37,7 @@ function Footer() {
             <Link to="/contact-us">Contact Us</Link>
             </li>
             <li className="nav-item">
-            <Link to="/login">Log In</Link>
+            { isLoggedIn ? <a href="/admin/dashboard"> Dashboard </a> : <Link to="/login">Log In</Link> }
             </li>
           </ul>
         </div>

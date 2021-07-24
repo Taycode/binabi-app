@@ -58,7 +58,7 @@ const RightOrderColumn = () => {
   useEffect(() => {
     orderInstance.getPrice()
     .then((data) => {
-      setPricePerKg(data ? data.price : 0)
+      setPricePerKg(data ? data.price || 0 : 0)
     }, () => {
       // Handle fetch price error
     })

@@ -40,12 +40,6 @@ input {
   display: block;
   font-family: inherit;
 }
-/* 
-input {
-  outline: none;
-  width: 80%;
-  margin: 10px auto;
-} */
 
 @media (max-width: 450px) {
   .App {
