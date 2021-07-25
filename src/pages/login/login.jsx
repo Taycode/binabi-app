@@ -32,7 +32,7 @@ export const AdminLogin = () => {
     .then(data => {
       window.location.href = '/admin/dashboard'
     }).catch(error => {
-      setSubmitError(JSON.parse(error.message).error.message)
+      setSubmitError(error.message)
       setSubmitting(false)
     })
   }

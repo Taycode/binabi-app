@@ -46,8 +46,8 @@ const PriceForm = ({ onClose }) => {
   const [ submitting, setSubmitting ] = useState(false)
   const [ submitError, setSubmitError ] = useState('')
 
-  function handleFormInput (priceObject) {
-    setPriceObject(priceObject)
+  function handleFormInput (inputPriceObject) {
+    setPriceObject(inputPriceObject)
   }
 
   function updatePricePerKG () {
