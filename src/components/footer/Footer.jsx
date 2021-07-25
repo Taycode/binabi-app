@@ -41,18 +41,16 @@ function Footer() {
             </li>
           </ul>
         </div>
-
         <div className="social-others">
           <div className="social">
-            <img src={facebook} alt="facebook" className="icon" />
-            <img src={twitter} alt="twitter" className="icon" />
-            <img src={instagram} alt="instagram" className="icon" />
+              <img src={facebook} alt="facebook" className="icon" />
+              <img src={twitter} alt="twitter" className="icon" />
+              <img src={instagram} alt="instagram" className="icon" />
           </div>
           <p>&copy; All rights reserved.</p>
         </div>
       </div>
     </footer>
-
   );
 }
 
