@@ -21,8 +21,8 @@ export const AdminNavigation = ({onCloseSideNav}) => {
         <ul className="navigation-items">
           {
             adminRoutes.map((el) => (
-              <div onClick={onCloseSideNav}>
-              <NavLink className="navigation-item" activeClassName="active" to={el.path} key={el.id}>
+              <div key={el.id} onClick={onCloseSideNav}>
+              <NavLink className="navigation-item" activeClassName="active" to={el.path} >
                 <li>
                   <span className="material-icons item-icon">
                     { el.icon }
