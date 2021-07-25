@@ -180,7 +180,6 @@ export const FormField = ({ label, name, placeholder, pattern, errorMessage, typ
         type={type || 'text'}
         placeholder={placeholder}
         className="text-box"
-        value={fieldValue}
         onInput={validateBeforeEmit}
       />
       <p className="error">

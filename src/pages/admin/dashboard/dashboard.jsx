@@ -47,6 +47,7 @@ const PriceForm = ({ onClose }) => {
   const [ submitError, setSubmitError ] = useState('')
 
   function handleFormInput (inputPriceObject) {
+    console.log(inputPriceObject)
     setPriceObject(inputPriceObject)
   }
 
@@ -76,9 +77,9 @@ const PriceForm = ({ onClose }) => {
           label="Price per KG"
           name="price"
           placeholder="e.g - 350"
-          pattern={/^[+]?\d+([.]\d+)?$/}
+          pattern={/[0-9]/}
           errorMessage="Please enter a valid number"
-          type="number"
+          type="text"
           onInput={handleFormInput}
         />
 
