@@ -73,7 +73,7 @@ const OrderListItem = ({ order, onClick }) => {
         </p>
       </div>
       <p className="order-capacity">
-        {order.capacity}kg
+        {order.capacity}kg - (&#x20A6;{order.price.toLocaleString()})
       </p>
       <p className={`order-status ${order.status}`}>
         {order.status}
