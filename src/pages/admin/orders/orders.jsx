@@ -136,68 +136,71 @@ const UpdateOrderStatusButton = ({currentOrder, children, status, setOrderStatus
 const OrderView = ({ order: currentOrder, isActive, backAction, onUpdateOrder }) => {
   return (
     <section className="order-in-view">
-      <div className="exit-action-container" onClick={backAction}>
-        <div className="exit-action-container--icon">
-          <span className="material-icons">
-            arrow_back
-          </span>
+      <section className="orders-view-content-box">
+        <div className="exit-action-container" onClick={backAction}>
+          <div className="exit-action-container--icon">
+            <span className="material-icons">
+              arrow_back
+            </span>
+          </div>
+          <p className="exit-action-container--action-name">
+            Back
+          </p>
         </div>
-        <p className="exit-action-container--action-name">
-          Back
-        </p>
-      </div>
-      <div className="customer-card">
-        <h3 className="customer-name">
-          {currentOrder.name}
-        </h3>
-        <p className="customer-address">
-          {currentOrder.address}
-        </p>
-        <p className="date-ordered">
-          {getOrderDate(currentOrder.timeCreated)}
-        </p>
-      </div>
-
-      <div className="order-details">
-        <h2 className="order-details-title">
-          Order Details
-        </h2>
-
-        <div className="order-details-content">
-          <OrderDetail label="Customer Name">
+        <div className="customer-card">
+          <h3 className="customer-name">
             {currentOrder.name}
-          </OrderDetail>
-
-          <OrderDetail label="Phone Number">
-            {currentOrder.phoneNumber}
-          </OrderDetail>
-
-          <OrderDetail label="No. of Kgs">
-            {currentOrder.capacity}Kg
-          </OrderDetail>
-
-          <OrderDetail label="Order Status">
-            {currentOrder.status}
-          </OrderDetail>
-
-          <OrderDetail label="Customer Address">
+          </h3>
+          <p className="customer-address">
             {currentOrder.address}
-          </OrderDetail>
-
-          <OrderDetail label="Time Ordered">
-            {getTimeOfOrder(currentOrder.timeCreated)}
-          </OrderDetail>
-
-          <OrderDetail label="Date Ordered">
+          </p>
+          <p className="date-ordered">
             {getOrderDate(currentOrder.timeCreated)}
-          </OrderDetail>
+          </p>
+        </div>
 
+        <div className="order-details">
+          <h2 className="order-details-title">
+            Order Details
+          </h2>
+
+          <div className="order-details-content">
+            <OrderDetail label="Customer Name">
+              {currentOrder.name}
+            </OrderDetail>
+
+            <OrderDetail label="Phone Number">
+              {currentOrder.phoneNumber}
+            </OrderDetail>
+
+            <OrderDetail label="No. of Kgs">
+              {currentOrder.capacity}Kg - (&#x20A6;{currentOrder.price.toLocaleString()})
+            </OrderDetail>
+
+            <OrderDetail label="Order Status">
+              {currentOrder.status}
+            </OrderDetail>
+
+            <OrderDetail label="Customer Address">
+              {currentOrder.address}
+            </OrderDetail>
+
+            <OrderDetail label="Time Ordered">
+              {getTimeOfOrder(currentOrder.timeCreated)}
+            </OrderDetail>
+
+            <OrderDetail label="Date Ordered">
+              {getOrderDate(currentOrder.timeCreated)}
+            </OrderDetail>
+
+          </div>
+          <div className="order-details-actions">
+            { currentOrder.status !== 'completed' && <UpdateOrderStatusButton currentOrder={currentOrder} status="completed" setOrderStatus={onUpdateOrder}> Mark as completed </UpdateOrderStatusButton> }
+            { currentOrder.status !== 'cancelled' && <UpdateOrderStatusButton currentOrder={currentOrder} status="cancelled" setOrderStatus={onUpdateOrder} > Mark as cancelled </UpdateOrderStatusButton> }
+          </div>
         </div>
-        <div className="order-details-actions">
-          { currentOrder.status !== 'completed' && <UpdateOrderStatusButton currentOrder={currentOrder} status="completed" setOrderStatus={onUpdateOrder}> Mark as completed </UpdateOrderStatusButton> }
-          { currentOrder.status !== 'cancelled' && <UpdateOrderStatusButton currentOrder={currentOrder} status="cancelled" setOrderStatus={onUpdateOrder} > Mark as cancelled </UpdateOrderStatusButton> }
-        </div>
-      </div>
+
+      </section>
     </section>
   )
 }

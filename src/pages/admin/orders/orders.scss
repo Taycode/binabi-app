@@ -10,7 +10,7 @@
     padding-top: 20px;
   }
   .orders-view {
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1600px) {
       display: none;
       &.in-view {
         display: block;
@@ -18,8 +18,14 @@
         z-index: 1;
         width: 100%;
         max-height: 100vh;
+        height: 100vh;
         overflow: auto;
         top: 0;
+        left: 0;
+        .orders-view-content-box {
+          max-width: 800px;
+          margin: auto
+        }
       }
     }
     background-color: #fdfdfd;
@@ -45,10 +51,13 @@
   margin: 15px auto;
   background: #ffffff;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 10px;
-  @media screen and (min-width: 800px) {
-    grid-template-columns: repeat(4, 1fr);
+  @media screen and (min-width: 500px) {
+    grid-template-columns: repeat(2, 1fr);
+    @media screen and (min-width: 700px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
   align-items: center;
   justify-content: space-between;
@@ -97,7 +106,7 @@
 
 .order-in-view {
   .exit-action-container {
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 1600px) {
       display: none;
     }
     cursor: pointer;
