@@ -1,6 +1,5 @@
 /* eslint-disable */
-import React, { useState } from 'react'
-import { useEffect } from 'react/cjs/react.development'
+import React, { useState, useEffect } from 'react'
 import Order from '../../helpers/orders'
 import { AppModal } from '../../components/app/modal/AppModal'
 import './order.scss'
