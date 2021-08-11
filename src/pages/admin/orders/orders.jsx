@@ -63,25 +63,25 @@ const NoOrdersFound = () => {
 
 const OrderListItem = ({ order, onClick }) => {
   return (
-    <NavLink to={`/admin/orders/${order.orderId}`} className="order-item" activeClassName="active" onClick={() => onClick(order.orderId)}>
-      <div className="order-id">
-        <div className="order-icon">
-          <img src={gasBottle} alt={`order_${order.orderId}`} />
+      <div className="order-item" onClick={() => onClick(order.orderId)}>
+        <div className="order-id">
+          <div className="order-icon">
+            <img src={gasBottle} alt={`order_${order.orderId}`} />
+          </div>
+          <p>
+            {order.name}
+          </p>
         </div>
-        <p>
-          {order.name}
+        <p className="order-capacity">
+          {order.capacity}kg - (&#x20A6;{order.price.toLocaleString()})
         </p>
-      </div>
-      <p className="order-capacity">
-        {order.capacity}kg - (&#x20A6;{order.price.toLocaleString()})
-      </p>
-      <p className={`order-status ${order.status}`}>
-        {order.status}
-      </p>
-      <p className="time">
-        {getTimeOfOrder(order.timeCreated) + ', ' + getOrderDate(order.timeCreated)}
-      </p>
-    </NavLink>
+        <p className={`order-status ${order.status}`}>
+          {order.status}
+        </p>
+        <p className="time">
+          {getTimeOfOrder(order.timeCreated) + ', ' + getOrderDate(order.timeCreated)}
+        </p>
+    </div>
   )
 }
 
@@ -194,10 +194,10 @@ const OrderView = ({ order: currentOrder, isActive, backAction, onUpdateOrder })
             </OrderDetail>
 
           </div>
-          <div className="order-details-actions">
+          { currentOrder.status === 'pending' && <div className="order-details-actions">
             { currentOrder.status !== 'completed' && <UpdateOrderStatusButton currentOrder={currentOrder} status="completed" setOrderStatus={onUpdateOrder}> Mark as completed </UpdateOrderStatusButton> }
             { currentOrder.status !== 'cancelled' && <UpdateOrderStatusButton currentOrder={currentOrder} status="cancelled" setOrderStatus={onUpdateOrder} > Mark as cancelled </UpdateOrderStatusButton> }
-          </div>
+          </div>}
         </div>
 
       </section>
@@ -241,7 +241,7 @@ const AdminPanelOrdersHeader = ({ onSelectSortMethod }) => {
 
 const FetchMoreOrdersButton = ({ onFetchOrders }) => {
   return <button className="orders-load-button" onClick={onFetchOrders}>
-    Load More
+    Load More &nbsp; &#129171;
   </button>
 }
 
@@ -271,6 +271,7 @@ export const AdminPanelOrders = () => {
         setNoOrdersFound(true)
       } else {
         setOrders(data)
+
         setFetchedFirstBatch(true)
       }
       }).catch(error => {
@@ -322,7 +323,7 @@ export const AdminPanelOrders = () => {
   }
 
   return (
-    <Router>
+    <>
       { error && <AppModal message={error} onClose={handleCloseError} /> }
       <AdminPanelOrdersHeader onSelectSortMethod={handleSort} />
       <section className="page-container">
@@ -341,17 +342,17 @@ export const AdminPanelOrders = () => {
           { fetchedFirstBatch && <FetchMoreOrdersButton onFetchOrders={handleLoadMore} /> }
           { noOrdersFound && <NoOrdersFound /> }
         </div>
-        <div className={`orders-view ${orderInView.orderId ? 'in-view' : ''}`}>
-          <Switch>
-            <Route path="/admin/orders/:orderId">
-              { orderInView.orderId && <OrderView order={orderInView} isActive backAction={backActionForOrderInView} onUpdateOrder={(uOrder) => popInUpdatedOrder(uOrder)} /> }
-            </Route>
-          </Switch>
-          {
-            !orderInView.orderId && <NoOrderInView />
-          }
-        </div>
+            {
+              Object.keys(orderInView).length > 0 &&
+              (
+                <div className="order-view-overlay">
+                  <div className={`orders-view ${orderInView.orderId ? 'in-view' : ''}`}>
+                    <OrderView order={orderInView} isActive backAction={backActionForOrderInView} onUpdateOrder={(uOrder) => popInUpdatedOrder(uOrder)} />
+                  </div>
+                </div>
+              )
+            }
       </section>
-    </Router>
+    </>
   )
 }

@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import Order from '../../helpers/orders'
 import { AppModal } from '../../components/app/modal/AppModal'
 import './order.scss'
@@ -33,6 +34,7 @@ const RightOrderColumn = () => {
   const [ submitError, setSubmitError ] = useState(null)
   const [ success, setSuccess ] = useState(false)
   const [ pricePerKg, setPricePerKg] = useState(0)
+  const History = useHistory()
 
   function handleInput (data) {
     setFormData({...formData, ...data})
@@ -52,6 +54,9 @@ const RightOrderColumn = () => {
       setSubmitError(true)
     }).finally(() => {
       setSubmitting(false)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
     })
   }
 
@@ -74,6 +79,7 @@ const RightOrderColumn = () => {
   function handleCloseModal () {
     if (success) {
       setFormData({})
+      History.push('/')
     }
     setSuccess(false)
     setSubmitError(null)

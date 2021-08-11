@@ -6,53 +6,58 @@
     flex-grow: 1;
     flex-shrink: 0;
     background-color: #ffffff;
-    border-right: 2px solid rgb(240, 245, 255);
-    padding-top: 20px;
+    padding: 20px 20px;
+    max-width: 1000px;
   }
+
+  .order-view-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100vh; 
+    max-height: 100vh;
+    overflow: auto; 
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.4);
+  }
+
   .orders-view {
-    @media screen and (max-width: 1600px) {
-      display: none;
-      &.in-view {
-        display: block;
-        position: fixed;
-        z-index: 1;
-        width: 100%;
-        max-height: 100vh;
-        height: 100vh;
-        overflow: auto;
-        top: 0;
-        left: 0;
-        .orders-view-content-box {
-          max-width: 800px;
-          margin: auto
-        }
-      }
-    }
-    background-color: #fdfdfd;
-    flex-shrink: 0;
-    width: 500px;
-    .no-order {
-      .icon {
-        display: block;
-        margin: auto;
-        margin-bottom: 20px;
-      }
-      width: inherit;
-      padding: 40px;;
-      font-size: 1em;
-      color: #557179;
-      text-align: center;
-    }
+    background-color: white;
+    min-height: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    // @media screen and (max-width: 1600px) {
+    //   display: none;
+    //   &.in-view {
+    //     display: block;
+    //     position: fixed;
+    //     z-index: 1;
+    //     width: 100%;
+    //     max-height: 100vh;
+    //     height: 100vh;
+    //     overflow: auto;
+    //     top: 0;
+    //     left: 0;
+    //     .orders-view-content-box {
+    //       max-width: 800px;
+    //       margin: auto
+    //     }
+    //   }
+    // }
+    // background-color: #fdfdfd;
+    // flex-shrink: 0;
+    // width: 500px;
   }
 }
 
 .order-item {
-  width: 95%;
-  margin: 15px auto;
+  margin: 15px 0px;
   background: #ffffff;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 10px;
+  // max-width: 1000px;
   @media screen and (min-width: 500px) {
     grid-template-columns: repeat(2, 1fr);
     padding: 8px 30px;
@@ -112,10 +117,8 @@
 }
 
 .order-in-view {
+  padding-top: 20px;
   .exit-action-container {
-    @media screen and (min-width: 1600px) {
-      display: none;
-    }
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -123,7 +126,6 @@
     color: rgb(87, 87, 87);
     max-width: max-content;
     margin-left: 30px;
-    margin-top: 20px;
     background: rgba(199, 199, 199, 0.152);
     padding: 5px 16px;
     border-radius: 5px;
@@ -291,12 +293,19 @@
   padding: 7px 20px;
   border-radius: 3px;
   border: none;
-  background: var(--theme);
-  color: white;
+  background: white;
+  border: 1px solid rgb(177, 177, 177);
+  color: rgb(92, 92, 92);
+  border-radius: 100px;
   font-family: inherit;
   font-weight: 500;
+  width: 100%;
+  max-width: 200px;
+  font-size: 12px;
   margin: auto;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 40px;
   cursor: pointer;
 }
