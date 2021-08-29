@@ -12,9 +12,15 @@ export default class Order {
                 status: 'pending',
                 timeCreated: Date.now(),
             });
-            console.log(order)
+            const statisticsRef = await db.collection('admin').doc('statistics');
+            const statisticsDoc = await statisticsRef.get();
+            let { pending, total } = await statisticsDoc.data();
+            pending += 1;
+            total += 1
+            await statisticsRef.update({ pending, total });
             return order
         } catch (error) {
+            console.log(error);
             throw (error);
         }
     }
@@ -23,8 +29,8 @@ export default class Order {
         const limit = 5
         try {
             const orderRef = db.collection('orders');
-            const orders = lastDoc 
-                ? await orderRef.orderBy(sortMethod, sortDirection).startAfter(lastDoc).limit(limit).get() 
+            const orders = lastDoc
+                ? await orderRef.orderBy(sortMethod, sortDirection).startAfter(lastDoc).limit(limit).get()
                 : await orderRef.orderBy(sortMethod, sortDirection).limit(limit).get();
             return orders.docs.map( (doc) => {
                 return {
@@ -50,6 +56,19 @@ export default class Order {
             await orderRef.update({
                 ...data
             });
+            const statisticsRef = await db.collection('admin').doc('statistics');
+            const statisticsDoc = await statisticsRef.get();
+            let { pending, completed, cancelled } = await statisticsDoc.data();
+
+            const { status } = data;
+            if (status === 'cancelled') {
+                cancelled += 1;
+                pending -= 1;
+            } else if (status === 'completed') {
+                completed += 1;
+                pending -= 1;
+            }
+            await statisticsRef.update({ pending, completed, cancelled });
             return (await orderRef.get()).data()
         } catch (error) {
             throw (error);
