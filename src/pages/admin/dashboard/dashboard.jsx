@@ -98,13 +98,13 @@ export const AdminDashboard = () => {
   const [openPriceForm, setOpenPriceForm] = useState(false)
   const [fetchPriceError, setFetchPriceError] = useState(false)
   const [fetchingPrice, setFetchingPrice] = useState(false)
-  const [orders, setOrders] = useState([])
+  const [ statistics, setStatistics ] = useState({})
   const [fetchingOrders, setFetchingOrders] = useState(true)
   const [fetchingOrdersError, setFetchingOrdersError] = useState('')
   
   useEffect(() => {
     fetchPricePerKg()
-    fetchOrders()
+    countOrders()
   }, [])
   
   function togglePriceForm (value, newPrice) {
@@ -125,12 +125,13 @@ export const AdminDashboard = () => {
     })
   }
 
-  function fetchOrders() {
+  function countOrders() {
     setFetchingOrders(true)
     setFetchingOrdersError(false)
-    orderInstance.getOrders()
+    orderInstance.countOrders()
     .then((data) => {
-      setOrders(data)
+      console.log(data)
+      setStatistics(data)
     }).catch(() => {
       setFetchingOrdersError(true)
     }).finally(() => {
@@ -153,21 +154,27 @@ export const AdminDashboard = () => {
         
         <DashboardCard 
           title="All orders"
-          value={orders.length}
+          value={statistics.total}
           theme="#2685aa"
           loading={fetchingOrders}
         />
 
         <DashboardCard 
           title="Pending Orders"
-          value={orders.filter(el => el.status === 'pending').length}
+          value={statistics.pending}
           theme="#ff7715"
           loading={fetchingOrders}
         />
 
         <DashboardCard 
           title="Completed Orders"
-          value={orders.filter(el => el.status === 'completed').length}
+          value={statistics.completed}
+          theme="#05d086"
+          loading={fetchingOrders}
+        />
+        <DashboardCard 
+          title="Cancelled Orders"
+          value={statistics.cancelled}
           theme="#05d086"
           loading={fetchingOrders}
         />

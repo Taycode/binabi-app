@@ -12,9 +12,10 @@ export default class Order {
                 status: 'pending',
                 timeCreated: Date.now(),
             });
-            const statisticsRef = await db.collection('admin').doc('statistics');
+            const statisticsRef = db.collection('admin').doc('statistics');
             const statisticsDoc = await statisticsRef.get();
-            let { pending, total } = await statisticsDoc.data();
+            console.log(statisticsDoc.data())
+            let { pending, total } = statisticsDoc.data();
             pending += 1;
             total += 1
             await statisticsRef.update({ pending, total });
@@ -56,9 +57,9 @@ export default class Order {
             await orderRef.update({
                 ...data
             });
-            const statisticsRef = await db.collection('admin').doc('statistics');
+            const statisticsRef = db.collection('admin').doc('statistics');
             const statisticsDoc = await statisticsRef.get();
-            let { pending, completed, cancelled } = await statisticsDoc.data();
+            let { pending, completed, cancelled } = statisticsDoc.data();
 
             const { status } = data;
             if (status === 'cancelled') {
@@ -108,6 +109,15 @@ export default class Order {
         } catch (error) {
             throw error;
         }
-
+        
+    }
+    
+    async countOrders() {
+        try {
+            const statstRef = db.collection('admin').doc('statistics');
+            return (await statstRef.get()).data()
+        } catch (error) {
+            throw error;
+        }
     }
 }

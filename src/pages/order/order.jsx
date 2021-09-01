@@ -49,14 +49,14 @@ const RightOrderColumn = () => {
     setSuccess(false)
     orderInstance.createOrder(formData).then(() => {
       setSuccess(true)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
     }).catch((e) => {
       console.log(e)
       setSubmitError(true)
     }).finally(() => {
       setSubmitting(false)
-      setTimeout(() => {
-        window.location.reload()
-      }, 2000)
     })
   }
 
