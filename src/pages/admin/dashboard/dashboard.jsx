@@ -175,7 +175,7 @@ export const AdminDashboard = () => {
         <DashboardCard 
           title="Cancelled Orders"
           value={statistics.cancelled}
-          theme="#05d086"
+          theme="rgb(230, 54, 54)"
           loading={fetchingOrders}
         />
       </div>
